@@ -19,10 +19,11 @@ export default {};
 .logo-wrapper > .tagline {
 	line-height: 180%;
 	color: #666;
+	font-size: 20px;
 }
 
 .logo-wrapper > .logo {
-	max-width: 200px;
+	width: 300px;
 	margin: 0 auto;
 }
 </style>
