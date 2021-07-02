@@ -2,11 +2,20 @@
 	<form class="registerForm">
 		<v-text-field v-model="username" label="Username" required></v-text-field>
 		<p class="validation-text">
-			<span class="warning" v-if="isUsernameValid"> 이름을 입력해주세요. </span>
+			<span class="warning" v-if="!isUsernameValid && username">
+				이름을 2글자 이상 입력해주세요.
+			</span>
 		</p>
-		<v-text-field v-model="email" label="Email" required></v-text-field>
+		<v-text-field
+			v-model="email"
+			label="Email"
+			required
+			type="email"
+		></v-text-field>
 		<p class="validation-text">
-			<span class="warning" v-if="!isEmailValid"> 이메일을 입력해주세요 </span>
+			<span class="warning" v-if="!isEmailValid && email">
+				이메일 형식에 맞춰서 입력해주세요.
+			</span>
 		</p>
 		<v-text-field
 			v-model="password"
@@ -15,11 +24,17 @@
 			type="password"
 		></v-text-field>
 		<p class="validation-text">
-			<span class="warning" v-if="isPasswordValid">
-				비밀번호를 입력해주세요.
+			<span class="warning" v-if="!isPasswordValid && password">
+				비밀번호를 4자리 이상 입력해주세요.
 			</span>
 		</p>
-		<v-btn class="registerBtn" @click="submitForm">회원가입</v-btn>
+		<v-btn
+			:disabled="!isUsernameValid || !isEmailValid || !isPasswordValid"
+			class="registerBtn"
+			@click="submitForm"
+			>회원가입</v-btn
+		>
+		<v-btn class="kakao_loginBtn" @click="kakaoLogin">카카오톡 로그인</v-btn>
 		<p class="pre-signup">
 			회원가입을 이미 하셨나요?
 			<a href="/login">로그인하러가기</a>
@@ -34,6 +49,7 @@ import {
 	validateUsername,
 	validatePassword,
 } from '@/utils/validation';
+
 export default {
 	data() {
 		return {
@@ -55,14 +71,21 @@ export default {
 	},
 	methods: {
 		async submitForm() {
-			const userData = {
-				name: this.username,
-				email: this.email,
-				password: this.password,
-			};
-			await registerUser(userData);
+			try {
+				const userData = {
+					name: this.username,
+					email: this.email,
+					password: this.password,
+				};
+				await registerUser(userData);
+			} catch (error) {
+				console.log(error);
+			}
 			this.initForm();
 			this.$router.push('/login');
+		},
+		kakaoLogin() {
+			console.log('kakaologin');
 		},
 		initForm() {
 			this.username = '';
@@ -87,5 +110,15 @@ export default {
 	opacity: 0.7;
 	margin-top: 20px;
 	text-align: center;
+}
+
+.pre-signup > a {
+	font-weight: bold;
+}
+
+.kakao_loginBtn {
+	width: 100%;
+	margin-top: 15px;
+	background-color: rgb(241, 241, 16) !important;
 }
 </style>

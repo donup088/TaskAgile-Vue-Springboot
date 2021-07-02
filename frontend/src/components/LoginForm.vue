@@ -1,9 +1,14 @@
 <template>
 	<form class="loginForm">
-		<v-text-field v-model="username" label="Email" required></v-text-field>
+		<v-text-field
+			v-model="email"
+			label="Email"
+			type="email"
+			required
+		></v-text-field>
 		<p class="validation-text">
-			<span class="warning" v-if="!isUsernameValid && username">
-				Please enter an email address
+			<span class="warning" v-if="!isEmailValid && email">
+				이메일 형식에 맞춰서 입력해주세요.
 			</span>
 		</p>
 		<v-text-field
@@ -12,7 +17,12 @@
 			required
 			type="password"
 		></v-text-field>
-		<v-btn class="loginBtn" @click="submitForm">로그인</v-btn>
+		<v-btn
+			:disabled="!isEmailValid || !isPasswordValid"
+			class="loginBtn"
+			@click="submitForm"
+			>로그인</v-btn
+		>
 		<p class="pre-signup">
 			회원가입을 안하셨나요?
 			<a href="/signup">회원가입하러가기</a>
@@ -22,25 +32,28 @@
 </template>
 
 <script>
-import { validateEmail } from '@/utils/validation';
+import { validateEmail, validatePassword } from '@/utils/validation';
 
 export default {
 	data() {
 		return {
-			username: '',
+			email: '',
 			password: '',
 		};
 	},
 	computed: {
-		isUsernameValid() {
-			return validateEmail(this.username);
+		isEmailValid() {
+			return validateEmail(this.email);
+		},
+		isPasswordValid() {
+			return validatePassword(this.password);
 		},
 	},
 	methods: {
 		async submitForm() {
 			try {
 				const userData = {
-					email: this.username,
+					email: this.email,
 					password: this.password,
 				};
 				await this.$store.dispatch('LOGIN', userData);
@@ -52,7 +65,7 @@ export default {
 			}
 		},
 		initForm() {
-			this.username = '';
+			this.email = '';
 			this.password = '';
 		},
 	},
@@ -74,5 +87,8 @@ export default {
 	opacity: 0.7;
 	margin-top: 20px;
 	text-align: center;
+}
+.pre-signup > a {
+	font-weight: bold;
 }
 </style>

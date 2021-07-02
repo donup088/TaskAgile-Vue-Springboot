@@ -5,11 +5,11 @@ function validateEmail(email) {
 }
 
 function validateUsername(usernmae) {
-	return usernmae.length < 1;
+	return usernmae.length > 1;
 }
 
 function validatePassword(password) {
-	return password.length < 4;
+	return password.length > 3;
 }
 
 export { validateEmail, validateUsername, validatePassword };
