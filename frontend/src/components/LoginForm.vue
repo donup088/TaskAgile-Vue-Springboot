@@ -7,9 +7,7 @@
 			required
 		></v-text-field>
 		<p class="validation-text">
-			<span class="warning" v-if="!isEmailValid && email">
-				이메일 형식에 맞춰서 입력해주세요.
-			</span>
+			<span class="warning" v-if="isNotEmpty"> 아이디를 입력해주세요. </span>
 		</p>
 		<v-text-field
 			v-model="password"
@@ -17,12 +15,12 @@
 			required
 			type="password"
 		></v-text-field>
-		<v-btn
-			:disabled="!isEmailValid || !isPasswordValid"
-			class="loginBtn"
-			@click="submitForm"
-			>로그인</v-btn
-		>
+		<p class="validation-text">
+			<span class="warning" v-if="errorMessage && !isNotEmpty">
+				가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.
+			</span>
+		</p>
+		<v-btn class="loginBtn" @click="submitForm">로그인</v-btn>
 		<p class="pre-signup">
 			회원가입을 안하셨나요?
 			<a href="/signup">회원가입하러가기</a>
@@ -32,21 +30,17 @@
 </template>
 
 <script>
-import { validateEmail, validatePassword } from '@/utils/validation';
-
 export default {
 	data() {
 		return {
 			email: '',
 			password: '',
+			errorMessage: '',
 		};
 	},
 	computed: {
-		isEmailValid() {
-			return validateEmail(this.email);
-		},
-		isPasswordValid() {
-			return validatePassword(this.password);
+		isNotEmpty() {
+			return this.errorMessage == 'NotEmpty';
 		},
 	},
 	methods: {
@@ -56,10 +50,16 @@ export default {
 					email: this.email,
 					password: this.password,
 				};
-				await this.$store.dispatch('LOGIN', userData);
+				const response = await this.$store.dispatch('LOGIN', userData);
+				console.log(response);
 				this.$router.push('/main');
 			} catch (error) {
-				console.log(error);
+				const errResponse = error.response.data;
+				if (errResponse.errors) {
+					this.errorMessage = error.response.data.errors[0].code;
+				} else {
+					this.errorMessage = errResponse.message;
+				}
 			} finally {
 				this.initForm();
 			}

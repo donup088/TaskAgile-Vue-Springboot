@@ -29,15 +29,12 @@ public class UserService {
         userRepository.save(User.create(request.getName(), request.getEmail(), request.getPassword(), passwordEncoder));
     }
 
-    @Transactional
     public UserResponse.Login login(String email, String password) {
         User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new PasswordWrongException();
         }
-
-        // TODO RefreshToken 처리 필요
 
         return UserResponse.Login.from(tokenProvider.generateAccessToken(user), new Token(user.getRefreshToken(), user.getRefreshTokenExpiredAt()));
     }
