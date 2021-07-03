@@ -21,6 +21,10 @@ import java.util.Date;
 public class JwtTokenProvider {
     private final JwtProps jwtProps;
 
+    public Token generateAccessToken(String id) {
+        return generateToken(id, jwtProps.getAccessTokenProps());
+    }
+
     public Token generateAccessToken(User user) {
         return generateToken(user, jwtProps.getAccessTokenProps());
     }
@@ -51,6 +55,19 @@ public class JwtTokenProvider {
         return Token.create(token, exp);
     }
 
+    private Token generateToken(String id, JwtProps.TokenProps tokenProps) {
+        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(tokenProps.getSecret()));
+
+        Date exp = new Date((new Date()).getTime() + tokenProps.getExpirationTimeMilliSec());
+        String token = Jwts.builder()
+                .setSubject(String.valueOf(id))
+                .setExpiration(exp)
+                .signWith(key)
+                .compact();
+
+        return Token.create(token, exp);
+    }
+
     private Jws<Claims> getClaims(String token, JwtProps.TokenProps tokenProps) throws RuntimeException {
         SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(tokenProps.getSecret()));
         Jws<Claims> claims = null;
@@ -64,7 +81,6 @@ public class JwtTokenProvider {
             log.error(ex.getMessage());
             throw new BusinessException("다시 로그인 해주세요");
         }
-
         return claims;
     }
 }

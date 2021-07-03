@@ -1,4 +1,4 @@
-package com.taskagile.config;
+package com.taskagile.config.web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 
-
     /****************************************************************************************
      * Encoding 설정
      * log 에 한글이 있어도 깨지지 않도록 하기 위함
@@ -35,5 +34,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
         characterEncodingFilter.setForceEncoding(true);
         return characterEncodingFilter;
     }
-
 }

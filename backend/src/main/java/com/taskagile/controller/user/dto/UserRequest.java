@@ -1,8 +1,7 @@
-package com.taskagile.controller.dto;
+package com.taskagile.controller.user.dto;
 
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 public class UserRequest {

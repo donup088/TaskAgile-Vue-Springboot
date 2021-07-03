@@ -2,10 +2,12 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`
 (
     `id`                       BIGINT       NOT NULL AUTO_INCREMENT,
-    `email`                    VARCHAR(100) NOT NULL,
+    `kakao_id`                 BIGINT,
+    `email`                    VARCHAR(100) ,
     `name`                     VARCHAR(100) NOT NULL,
-    `password`                 VARCHAR(150) NOT NULL,
-    `role`                     VARCHAR(50) NOT NULL,
+    `password`                 VARCHAR(150),
+    `provider`                 VARCHAR(50)  NOT NULL,
+    `role`                     VARCHAR(50)  NOT NULL,
     `refresh_token`            VARCHAR(255) NOT NULL,
     `refresh_token_expired_at` DATETIME     NOT NULL,
     `created_at`               DATETIME     NOT NULL,

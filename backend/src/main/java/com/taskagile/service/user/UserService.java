@@ -1,7 +1,7 @@
 package com.taskagile.service.user;
 
-import com.taskagile.controller.dto.UserRequest;
-import com.taskagile.controller.dto.UserResponse;
+import com.taskagile.controller.user.dto.UserRequest;
+import com.taskagile.controller.user.dto.UserResponse;
 import com.taskagile.domain.user.User;
 import com.taskagile.domain.user.UserRepository;
 import com.taskagile.securiy.token.JwtTokenProvider;

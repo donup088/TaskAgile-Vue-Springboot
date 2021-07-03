@@ -5,7 +5,20 @@
 </template>
 
 <script>
-export default {};
+export default {
+	created() {
+		this.checkUrl();
+	},
+	methods: {
+		checkUrl() {
+			const urlToken = location.href.split('token=')[1];
+			if (urlToken) {
+				this.$store.dispatch('OAUTHLOGIN', urlToken);
+				location.href = '/main';
+			}
+		},
+	},
+};
 </script>
 
 <style>

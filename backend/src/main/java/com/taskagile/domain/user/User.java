@@ -18,14 +18,18 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long kakaoId;
+
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private SignupProvider provider;
 
     @Column(nullable = false)
     private String refreshToken;
@@ -43,6 +47,18 @@ public class User extends BaseEntity {
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .role(Role.User)
+                .provider(SignupProvider.TASKAGILE)
+                .refreshToken(UUID.randomUUID().toString())
+                .refreshTokenExpiredAt(LocalDateTime.now())
+                .build();
+    }
+
+    public static User createKakao(Long id, String name) {
+        return User.builder()
+                .kakaoId(id)
+                .name(name)
+                .role(Role.User)
+                .provider(SignupProvider.KAKAO)
                 .refreshToken(UUID.randomUUID().toString())
                 .refreshTokenExpiredAt(LocalDateTime.now())
                 .build();

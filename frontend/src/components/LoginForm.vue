@@ -21,6 +21,7 @@
 			</span>
 		</p>
 		<v-btn class="loginBtn" @click="submitForm">로그인</v-btn>
+		<v-btn class="kakao_loginBtn" @click="kakaoLogin">카카오톡 로그인</v-btn>
 		<p class="pre-signup">
 			회원가입을 안하셨나요?
 			<a href="/signup">회원가입하러가기</a>
@@ -28,7 +29,6 @@
 		<p class="findPassword"><a href="#">비밀번호를 잊어버리셨나요?</a></p>
 	</form>
 </template>
-
 <script>
 export default {
 	data() {
@@ -68,6 +68,9 @@ export default {
 			this.email = '';
 			this.password = '';
 		},
+		kakaoLogin() {
+			window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
+		},
 	},
 };
 </script>
@@ -88,7 +91,14 @@ export default {
 	margin-top: 20px;
 	text-align: center;
 }
+
 .pre-signup > a {
 	font-weight: bold;
+}
+
+.kakao_loginBtn {
+	width: 100%;
+	margin-top: 15px;
+	background-color: rgb(241, 241, 16) !important;
 }
 </style>

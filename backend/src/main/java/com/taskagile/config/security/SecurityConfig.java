@@ -1,4 +1,4 @@
-package com.taskagile.config;
+package com.taskagile.config.security;
 
 import com.taskagile.securiy.token.JwtTokenAuthenticationFilter;
 import com.taskagile.securiy.token.JwtTokenProvider;
@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider tokenProvider;
     private final CustomUserDetailsService customUserDetailsService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -50,7 +51,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/user/register").permitAll()
                 .antMatchers("/api/user/login").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/oauth2/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .oauth2Login()
+                .successHandler(oAuth2SuccessHandler);
+
 
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

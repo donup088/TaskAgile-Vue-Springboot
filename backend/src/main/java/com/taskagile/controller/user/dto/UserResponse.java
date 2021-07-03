@@ -1,4 +1,4 @@
-package com.taskagile.controller.dto;
+package com.taskagile.controller.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taskagile.securiy.token.Token;

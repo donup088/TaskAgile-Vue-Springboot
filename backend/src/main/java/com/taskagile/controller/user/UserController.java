@@ -1,7 +1,7 @@
-package com.taskagile.controller;
+package com.taskagile.controller.user;
 
-import com.taskagile.controller.dto.UserRequest;
-import com.taskagile.controller.dto.UserResponse;
+import com.taskagile.controller.user.dto.UserRequest;
+import com.taskagile.controller.user.dto.UserResponse;
 import com.taskagile.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

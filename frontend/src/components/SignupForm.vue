@@ -34,7 +34,6 @@
 			@click="submitForm"
 			>회원가입</v-btn
 		>
-		<v-btn class="kakao_loginBtn" @click="kakaoLogin">카카오톡 로그인</v-btn>
 		<p class="pre-signup">
 			회원가입을 이미 하셨나요?
 			<a href="/login">로그인하러가기</a>
@@ -105,8 +104,7 @@ export default {
 	margin-top: 35px;
 }
 
-.pre-signup,
-.findPassword {
+.pre-signup {
 	opacity: 0.7;
 	margin-top: 20px;
 	text-align: center;
@@ -114,11 +112,5 @@ export default {
 
 .pre-signup > a {
 	font-weight: bold;
-}
-
-.kakao_loginBtn {
-	width: 100%;
-	margin-top: 15px;
-	background-color: rgb(241, 241, 16) !important;
 }
 </style>

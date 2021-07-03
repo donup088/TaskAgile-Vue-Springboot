@@ -34,5 +34,9 @@ export default new Vuex.Store({
 			saveAuthToCookie(data.accessToken);
 			return data;
 		},
+		OAUTHLOGIN({ commit }, token) {
+			commit('setToken', token);
+			saveAuthToCookie(token);
+		},
 	},
 });
