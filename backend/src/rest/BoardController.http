@@ -1,0 +1,8 @@
+POST {{apiUrl}}/board/personal
+Content-Type: application/json;
+Authorization: {{authorizationToken}}
+
+{
+  "name": "Test Project",
+  "description": "여러가지 기술 적용"
+}

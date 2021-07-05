@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
-@Builder
+@Table(name = "user")
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,0 +1,7 @@
+POST {{apiUrl}}/team
+Content-Type: application/json;
+Authorization: {{authorizationToken}}
+
+{
+  "name": "Test Team"
+}
