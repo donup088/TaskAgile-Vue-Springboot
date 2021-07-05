@@ -9,7 +9,7 @@
 			<input type="text" placeholder="Search" class="search__input" />
 		</div>
 		<div class="dropdown">
-			<button class="dropbtn">동그라미</button>
+			<button class="dropbtn">{{ $store.state.username }}</button>
 			<div class="dropdown-content">
 				<a href="#">내 정보</a>
 				<a href="#">로그아웃</a>

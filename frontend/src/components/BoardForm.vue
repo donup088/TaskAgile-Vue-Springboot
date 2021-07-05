@@ -3,29 +3,34 @@
 		<div class="boards-section">
 			<h2 class="section-title">Personal Boards</h2>
 			<div class="boards">
-				<div id="boardList" class="boards__list">
-					<h3>테스트보드1</h3>
-					<p>테스트보드 내용 1</p>
-				</div>
-				<div id="boardList" class="boards__list">
-					<h3>테스트보드2</h3>
-					<p>테스트보드 내용 2</p>
+				<div
+					id="boardList"
+					class="boards__list"
+					v-for="board in personalBoards"
+					v-bind:key="board.id"
+				>
+					<h3>{{ board.name }}</h3>
+					<p>{{ board.description }}</p>
 				</div>
 				<div class="boards__add">
-					<font-awesome-icon icon="plus" />
+					<font-awesome-icon icon="plus" @click="createBoard()" />
 					<div>Create New Board</div>
 				</div>
 			</div>
 		</div>
-		<div class="boards-section">
-			<h2 class="section-title">테스트 팀2</h2>
+		<div class="boards-section" v-for="team in teamBoards" v-bind:key="team.id">
+			<h2 class="section-title">{{ team.name }}</h2>
 			<div class="boards">
-				<div class="boards__list">
-					<h3>테스트보드</h3>
-					<p>테스트보드는 이렇다</p>
+				<div
+					class="boards__list"
+					v-for="board in team.boards"
+					v-bind:key="board.id"
+				>
+					<h3>{{ board.name }}</h3>
+					<p>{{ board.description }}</p>
 				</div>
 				<div class="boards__add">
-					<font-awesome-icon icon="plus" />
+					<font-awesome-icon icon="plus" @click="createBoard()" />
 					<div>Create New Board</div>
 				</div>
 			</div>
@@ -38,7 +43,26 @@
 </template>
 
 <script>
-export default {};
+//import { createBoard } from '@/api/board';
+import { getMyTeamAndBoard } from '@/api/me';
+
+export default {
+	computed: {
+		personalBoards() {
+			return this.$store.getters.getPersonalBoards;
+		},
+		teamBoards() {
+			return this.$store.getters.getTeamBoards;
+		},
+	},
+	async created() {
+		const { data } = await getMyTeamAndBoard();
+		console.log(data);
+		this.$store.commit('setUsername', data.user.name);
+		this.$store.commit('setBoards', data.boards);
+		this.$store.commit('setTeams', data.teams);
+	},
+};
 </script>
 
 <style scoped>
