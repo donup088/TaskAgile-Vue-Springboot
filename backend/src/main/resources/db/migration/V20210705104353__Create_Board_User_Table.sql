@@ -4,7 +4,6 @@ CREATE TABLE `board_user`
     `id`          BIGINT       NOT NULL AUTO_INCREMENT,
     `board_id`    BIGINT       NOT NULL,
     `user_id`     BIGINT       NOT NULL,
-    `description` VARCHAR(255) NOT NULL,
     `created_at`  DATETIME     NOT NULL,
     `updated_at`  DATETIME DEFAULT NULL,
     `deleted_at`  DATETIME DEFAULT NULL,

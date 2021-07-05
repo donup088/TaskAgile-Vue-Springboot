@@ -24,4 +24,15 @@ public class BoardUser extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
+
+    private void setBoard(Board board) {
+        this.board = board;
+        board.getBoardUsers().add(this);
+    }
+
+    public static BoardUser create(Board board, User user) {
+        BoardUser boardUser = BoardUser.builder().user(user).build();
+        boardUser.setBoard(board);
+        return boardUser;
+    }
 }

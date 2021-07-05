@@ -1,8 +1,10 @@
-POST {{apiUrl}}/board/personal
-Content-Type: application/json;
+POST {{apiUrl}}/board
+Content-Type: application/json;charset=UTF-8
 Authorization: {{authorizationToken}}
 
 {
-  "name": "Test Project",
-  "description": "여러가지 기술 적용"
+  "name": "Test Project Other User",
+  "description": "여러가지 기술 적용",
+  "teamId": 0
 }
+

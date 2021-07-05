@@ -1,0 +1,5 @@
+GET {{apiUrl}}/me/board
+Content-Type: application/json;
+Authorization: {{authorizationToken}}
+
+

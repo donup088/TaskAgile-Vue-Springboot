@@ -2,18 +2,15 @@ package com.taskagile.controller.board.dto;
 
 import lombok.*;
 
-import javax.validation.constraints.NotEmpty;
-
-public class BoardRequest {
+public class BoardDto {
     @Getter
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    public static class create {
-        @NotEmpty
+    public static class Board {
+        private Long id;
         private String name;
         private String description;
-        @NotEmpty
         private Long teamId;
     }
 }
