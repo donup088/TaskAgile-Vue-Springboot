@@ -4,17 +4,15 @@
 			<font-awesome-icon icon="home" class="home-icon fa-lg" />
 			<img src="@/assets/logo.png" />
 		</div>
-
 		<div class="search">
 			<font-awesome-icon icon="search" class="search-icon" />
 			<input type="text" placeholder="Search" class="search__input" />
 		</div>
-
 		<div class="dropdown">
 			<button class="dropbtn">동그라미</button>
 			<div class="dropdown-content">
-				<a href="/recommend">내 정보</a>
-				<a href="/store/myStore">로그아웃</a>
+				<a href="#">내 정보</a>
+				<a href="#">로그아웃</a>
 			</div>
 		</div>
 	</header>
@@ -26,10 +24,13 @@ export default {};
 
 <style scoped>
 .page-header {
-	margin: 10px;
+	margin: 10px 0px;
+	width: 100%;
+	padding: 10px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	border-bottom: 1px solid gray;
 }
 
 .logo {
@@ -50,16 +51,13 @@ export default {};
 
 .search {
 	border: 1px solid gray;
-	padding: 5px;
+	padding: 7px;
 	border-radius: 6px;
-}
-
-.search-box {
-	width: 33%;
+	width: 30%;
 }
 
 .search__input {
-	margin-left: 5px;
+	margin-left: 8px;
 }
 
 .dropdown {
