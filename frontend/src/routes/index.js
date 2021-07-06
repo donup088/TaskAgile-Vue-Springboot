@@ -25,6 +25,11 @@ const router = new VueRouter({
 			meta: { auth: true },
 		},
 		{
+			path: '/board',
+			component: () => import('../views/BoardPage.vue'),
+			meta: { auth: true },
+		},
+		{
 			path: '*',
 			component: () => import('../views/NotFoundPage.vue'),
 		},

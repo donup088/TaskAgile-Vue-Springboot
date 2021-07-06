@@ -1,7 +1,7 @@
 <template>
 	<footer class="footer">
 		<span class="copyright">&copy; 2021 TaskAgile.com</span>
-		<ul class="footer-links float-right">
+		<ul class="footer-links">
 			<li class="list-inline-item">
 				<a href="#">About</a>
 			</li>
@@ -29,14 +29,14 @@ export default {};
 <style scoped>
 .footer {
 	position: absolute;
-	bottom: 10px;
+	bottom: 0;
 	width: 100%;
+	padding: 0px 10px;
 	display: flex;
-	font-size: 18px;
+	font-size: 20px;
 	color: #666;
 	line-height: 40px;
 	border-top: 1px solid #ddd;
-	margin-top: 50px;
 	justify-content: space-between;
 }
 
@@ -52,6 +52,7 @@ export default {};
 	margin: 0px 10px;
 	padding: 0px 10px;
 }
+
 .footer-links {
 	display: flex;
 }

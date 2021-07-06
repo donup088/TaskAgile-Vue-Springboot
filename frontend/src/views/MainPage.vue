@@ -1,7 +1,9 @@
 <template>
 	<div>
-		<AppHeader></AppHeader>
-		<BoardForm></BoardForm>
+		<div class="main-container">
+			<AppHeader></AppHeader>
+			<BoardListItem></BoardListItem>
+		</div>
 		<AppFooter></AppFooter>
 	</div>
 </template>
@@ -9,12 +11,12 @@
 <script>
 import AppHeader from '@/components/common/AppHeader.vue';
 import AppFooter from '@/components/common/AppFooter.vue';
-import BoardForm from '@/components/BoardListItem.vue';
+import BoardListItem from '@/components/BoardListItem.vue';
 
 export default {
 	components: {
 		AppHeader,
-		BoardForm,
+		BoardListItem,
 		AppFooter,
 	},
 };

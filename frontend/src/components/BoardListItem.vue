@@ -127,16 +127,18 @@ export default {
 
 .boards {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .boards__list {
 	width: 270px;
 	height: 110px;
 	border-radius: 5px;
-	background-color: #377ef6;
+	background-color: #42b983;
 	color: #fff;
 	padding: 15px;
 	margin-right: 10px;
+	margin-bottom: 10px;
 	cursor: pointer;
 }
 
@@ -161,6 +163,7 @@ export default {
 	color: #666;
 	text-align: center;
 	padding-top: 30px;
+	cursor: pointer;
 	font-weight: 400;
 }
 
@@ -170,7 +173,9 @@ export default {
 
 .team-add__btn {
 	color: #666;
+	cursor: pointer;
 	text-decoration: underline;
+	margin-bottom: 5;
 	padding: 15px;
 }
 </style>
