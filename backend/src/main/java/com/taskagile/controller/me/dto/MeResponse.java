@@ -19,13 +19,13 @@ public class MeResponse {
     public static class TeamAndBoard {
         private List<BoardDto.GetOne> boards;
         private List<TeamDto.GetOne> teams;
-        private UserDto.GetIdAndName getIdAndName;
+        private UserDto.GetIdAndName user;
 
         public static MeResponse.TeamAndBoard build(List<Board> boards, List<Team> teams, User user) {
             return TeamAndBoard.builder()
                     .boards(boards.stream().map(BoardDto.GetOne::build).collect(Collectors.toList()))
                     .teams(teams.stream().map(TeamDto.GetOne::build).collect(Collectors.toList()))
-                    .getIdAndName(UserDto.GetIdAndName.build(user))
+                    .user(UserDto.GetIdAndName.build(user))
                     .build();
         }
     }

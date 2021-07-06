@@ -17,7 +17,7 @@ public class MeService {
     private final TeamRepository teamRepository;
 
     public List<Board> getBoard(User user){
-        return boardRepository.findAllByCreatedBy(user);
+        return boardRepository.findAllByUserInBoardUser(user);
     }
 
     public List<Team> getTeam(User user){
