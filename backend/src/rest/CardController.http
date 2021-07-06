@@ -1,0 +1,22 @@
+POST {{apiUrl}}/card/list
+Content-Type: application/json;charset=UTF-8
+Authorization: {{authorizationToken}}
+
+{
+  "name": "Test Card List",
+  "position": 1,
+  "boardId": 1
+}
+
+###
+
+POST {{apiUrl}}/card
+Content-Type: application/json;charset=UTF-8
+Authorization: {{authorizationToken}}
+
+{
+  "title": "Test Card Title",
+  "description": "Test Card Description",
+  "position": 1,
+  "cardListId": 1
+}
