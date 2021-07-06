@@ -20,8 +20,8 @@ public class TeamController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TeamDto.GetTeam create(@RequestBody @Valid TeamRequest.create request, @CurrentUser CustomUserDetails customUserDetails) {
+    public TeamDto.GetOne create(@RequestBody @Valid TeamRequest.create request, @CurrentUser CustomUserDetails customUserDetails) {
         Team team = teamService.create(request, customUserDetails.getUser());
-        return TeamDto.GetTeam.build(team);
+        return TeamDto.GetOne.build(team);
     }
 }

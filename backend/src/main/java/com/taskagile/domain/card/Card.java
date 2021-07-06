@@ -27,12 +27,18 @@ public class Card extends BaseEntity {
     @JoinColumn(name = "card_list_id")
     private CardList cardList;
 
+    private void setCardList(CardList cardList) {
+        this.cardList = cardList;
+        cardList.getCards().add(this);
+    }
+
     public static Card create(CardRequest.CreateCard request, CardList cardList) {
-        return Card.builder()
+        Card card = Card.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .position(request.getPosition())
-                .cardList(cardList)
                 .build();
+        card.setCardList(cardList);
+        return card;
     }
 }

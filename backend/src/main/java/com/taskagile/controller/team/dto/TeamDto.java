@@ -8,12 +8,15 @@ public class TeamDto {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    public static class GetTeam {
+    public static class GetOne {
         private Long id;
         private String name;
 
-        public static GetTeam build(Team team) {
-            return GetTeam.builder().id(team.getId()).name(team.getName()).build();
+        public static GetOne build(Team team) {
+            if (team == null) {
+                return null;
+            }
+            return GetOne.builder().id(team.getId()).name(team.getName()).build();
         }
     }
 }

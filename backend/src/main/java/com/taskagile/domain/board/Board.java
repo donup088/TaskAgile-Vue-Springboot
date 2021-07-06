@@ -1,6 +1,7 @@
 package com.taskagile.domain.board;
 
 import com.taskagile.controller.board.dto.BoardRequest;
+import com.taskagile.domain.card.CardList;
 import com.taskagile.domain.common.BaseEntity;
 import com.taskagile.domain.team.Team;
 import com.taskagile.domain.user.User;
@@ -28,6 +29,10 @@ public class Board extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "board")
+    private final List<CardList> cardLists = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)

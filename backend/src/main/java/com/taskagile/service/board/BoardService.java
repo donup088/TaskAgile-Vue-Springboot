@@ -6,6 +6,7 @@ import com.taskagile.domain.board.BoardRepository;
 import com.taskagile.domain.team.Team;
 import com.taskagile.domain.team.TeamRepository;
 import com.taskagile.domain.user.User;
+import com.taskagile.service.board.exception.BoardNotFoundException;
 import com.taskagile.service.team.exception.TeamNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,10 @@ public class BoardService {
         Team team = teamRepository.findById(request.getTeamId()).orElseThrow(TeamNotFoundException::new);
         Board board = Board.create(request, team, user);
         return boardRepository.save(board);
+    }
+
+    @Transactional(readOnly = true)
+    public Board getBoard(Long boardId) {
+        return boardRepository.findById(boardId).orElseThrow(BoardNotFoundException::new);
     }
 }

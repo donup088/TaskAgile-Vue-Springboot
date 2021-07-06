@@ -17,15 +17,15 @@ public class MeResponse {
     @NoArgsConstructor
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class TeamAndBoard {
-        private List<BoardDto.GetBoard> boards;
-        private List<TeamDto.GetTeam> teams;
-        private UserDto.User user;
+        private List<BoardDto.GetOne> boards;
+        private List<TeamDto.GetOne> teams;
+        private UserDto.GetIdAndName getIdAndName;
 
         public static MeResponse.TeamAndBoard build(List<Board> boards, List<Team> teams, User user) {
             return TeamAndBoard.builder()
-                    .boards(boards.stream().map(BoardDto.GetBoard::build).collect(Collectors.toList()))
-                    .teams(teams.stream().map(TeamDto.GetTeam::build).collect(Collectors.toList()))
-                    .user(UserDto.User.builder().name(user.getName()).build())
+                    .boards(boards.stream().map(BoardDto.GetOne::build).collect(Collectors.toList()))
+                    .teams(teams.stream().map(TeamDto.GetOne::build).collect(Collectors.toList()))
+                    .getIdAndName(UserDto.GetIdAndName.build(user))
                     .build();
         }
     }

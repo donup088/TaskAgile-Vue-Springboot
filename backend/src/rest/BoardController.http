@@ -8,3 +8,10 @@ Authorization: {{authorizationToken}}
   "teamId": 0
 }
 
+###
+
+GET {{apiUrl}}/board/1
+Content-Type: application/json;charset=UTF-8
+Authorization: {{authorizationToken}}
+
+
