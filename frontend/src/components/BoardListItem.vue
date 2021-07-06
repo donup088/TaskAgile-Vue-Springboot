@@ -13,7 +13,7 @@
 					<p>{{ board.description }}</p>
 				</div>
 				<div class="boards__add">
-					<font-awesome-icon icon="plus" @click="createBoard()" />
+					<font-awesome-icon icon="plus" @click="createBoard(0)" />
 					<div>Create New Board</div>
 				</div>
 			</div>
@@ -30,34 +30,79 @@
 					<p>{{ board.description }}</p>
 				</div>
 				<div class="boards__add">
-					<font-awesome-icon icon="plus" @click="createBoard()" />
+					<font-awesome-icon icon="plus" @click="createBoard(team.id)" />
 					<div>Create New Board</div>
 				</div>
 			</div>
 		</div>
 
 		<div class="team">
-			<button class="team-add__btn">+ Create New Team</button>
+			<button class="team-add__btn" @click="createTeam()">
+				+ Create New Team
+			</button>
 		</div>
+
+		<CreateBoardModal
+			v-if="showBoardModal"
+			@close="showBoardModal = false"
+			@created="createdBoard"
+			:selectedTeamId="this.selectedTeamId"
+		>
+		</CreateBoardModal>
+		<CreateTeamModal
+			v-if="showTeamModal"
+			@close="showTeamModal = false"
+			@created="createdTeam"
+		>
+		</CreateTeamModal>
 	</div>
 </template>
 
 <script>
-//import { createBoard } from '@/api/board';
 import { getMyTeamAndBoard } from '@/api/me';
+import CreateBoardModal from '@/components/modal/CreateBoardModal.vue';
+import CreateTeamModal from '@/components/modal/CreateTeamModal.vue';
 
 export default {
+	data() {
+		return {
+			showBoardModal: false,
+			showTeamModal: false,
+			selectedTeamId: 0,
+		};
+	},
+	components: {
+		CreateBoardModal,
+		CreateTeamModal,
+	},
 	computed: {
 		personalBoards() {
+			console.log('11');
 			return this.$store.getters.getPersonalBoards;
 		},
 		teamBoards() {
 			return this.$store.getters.getTeamBoards;
 		},
 	},
+	methods: {
+		createBoard(teamId) {
+			if (teamId !== 0) {
+				this.selectedTeamId = teamId;
+			}
+			this.showBoardModal = true;
+		},
+		createdBoard() {
+			this.showBoardModal = false;
+		},
+		createTeam() {
+			this.showTeamModal = true;
+		},
+		createdTeam() {
+			this.showTeamModal = false;
+		},
+	},
 	async created() {
 		const { data } = await getMyTeamAndBoard();
-		console.log(data);
 		this.$store.commit('setUsername', data.user.name);
 		this.$store.commit('setBoards', data.boards);
 		this.$store.commit('setTeams', data.teams);

@@ -1,6 +1,6 @@
 <template>
 	<header class="page-header">
-		<div class="logo">
+		<div class="logo" @click="goMain()">
 			<font-awesome-icon icon="home" class="home-icon fa-lg" />
 			<img src="@/assets/logo.png" />
 		</div>
@@ -12,14 +12,31 @@
 			<button class="dropbtn">{{ $store.state.username }}</button>
 			<div class="dropdown-content">
 				<a href="#">내 정보</a>
-				<a href="#">로그아웃</a>
+				<a @click="logoutUser">로그아웃</a>
 			</div>
 		</div>
 	</header>
 </template>
 
 <script>
-export default {};
+import { deleteCookie } from '../../utils/cookies';
+
+export default {
+	methods: {
+		goMain() {
+			this.$router.push('/main');
+		},
+		logoutUser() {
+			if (confirm('로그아웃 하시겠습니까?')) {
+				this.$store.commit('clearUsername');
+				this.$store.commit('clearToken');
+				deleteCookie('taskagile_auth');
+				deleteCookie('taskagile_user');
+				this.$router.push('/login');
+			}
+		},
+	},
+};
 </script>
 
 <style scoped>

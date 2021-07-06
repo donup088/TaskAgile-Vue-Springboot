@@ -6,9 +6,6 @@ import javax.validation.constraints.NotEmpty;
 
 public class UserRequest {
     @Getter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Register {
         @NotEmpty
         private String name;

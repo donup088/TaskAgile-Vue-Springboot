@@ -18,7 +18,7 @@ export default new Vuex.Store({
 	},
 	getters: {
 		isLogin(state) {
-			return state.username !== '';
+			return state.token !== '';
 		},
 		getPersonalBoards(state) {
 			return state.boards.filter(board => board.teamId === 0);
@@ -45,11 +45,20 @@ export default new Vuex.Store({
 		setUsername(state, username) {
 			state.username = username;
 		},
+		clearUsername(state) {
+			state.username = '';
+		},
 		setBoards(state, boards) {
 			state.boards = boards;
 		},
+		addBoard(state, board) {
+			state.boards.push(board);
+		},
 		setTeams(state, teams) {
 			state.teams = teams;
+		},
+		addTeam(state, team) {
+			state.teams.push(team);
 		},
 	},
 	actions: {

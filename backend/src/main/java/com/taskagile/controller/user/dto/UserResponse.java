@@ -12,12 +12,12 @@ public class UserResponse {
     @Getter
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class Login {
-        private String accessToken;
+        private final String accessToken;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-        private LocalDateTime accessTokenExpiredAt;
-        private String refreshToken;
+        private final LocalDateTime accessTokenExpiredAt;
+        private final String refreshToken;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-        private LocalDateTime refreshTokenExpiredAt;
+        private final LocalDateTime refreshTokenExpiredAt;
 
         public static Login from(Token accessToken, Token refreshToken) {
             return new Login(

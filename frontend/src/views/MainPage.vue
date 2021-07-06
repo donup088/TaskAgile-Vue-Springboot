@@ -9,7 +9,7 @@
 <script>
 import AppHeader from '@/components/common/AppHeader.vue';
 import AppFooter from '@/components/common/AppFooter.vue';
-import BoardForm from '@/components/BoardForm.vue';
+import BoardForm from '@/components/BoardListItem.vue';
 
 export default {
 	components: {

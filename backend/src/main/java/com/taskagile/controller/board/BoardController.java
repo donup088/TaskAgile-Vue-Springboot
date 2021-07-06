@@ -1,7 +1,7 @@
 package com.taskagile.controller.board;
 
+import com.taskagile.controller.board.dto.BoardDto;
 import com.taskagile.controller.board.dto.BoardRequest;
-import com.taskagile.controller.board.dto.BoardResponse;
 import com.taskagile.domain.board.Board;
 import com.taskagile.securiy.userdetails.CurrentUser;
 import com.taskagile.securiy.userdetails.CustomUserDetails;
@@ -18,9 +18,9 @@ public class BoardController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BoardResponse.GetId create(@RequestBody BoardRequest.create request, @CurrentUser CustomUserDetails customUserDetails) {
+    public BoardDto.GetBoard create(@RequestBody BoardRequest.create request, @CurrentUser CustomUserDetails customUserDetails) {
         Board board = boardService.create(request, customUserDetails.getUser());
 
-        return BoardResponse.GetId.build(board.getId());
+        return BoardDto.GetBoard.build(board);
     }
 }
