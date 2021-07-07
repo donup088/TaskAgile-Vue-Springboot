@@ -4,4 +4,8 @@ function createBoard(boardData) {
 	return instanceWithAuth.post('/board', boardData);
 }
 
-export { createBoard };
+function getBoard(boardId) {
+	return instanceWithAuth.get(`/board/${boardId}`);
+}
+
+export { createBoard, getBoard };

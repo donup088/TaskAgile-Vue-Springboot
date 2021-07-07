@@ -15,14 +15,14 @@ public class BoardResponse {
     @NoArgsConstructor
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class GetBoard {
-        private TeamDto.GetOne teams;
+        private TeamDto.GetOne team;
         private BoardDto.GetOneWithPersonal board;
         private List<UserDto.GetIdAndName> members;
         private List<CardListDto.GetList> cardLists;
 
         public static BoardResponse.GetBoard build(Board board){
             return GetBoard.builder()
-                    .teams(TeamDto.GetOne.build(board.getTeam()))
+                    .team(TeamDto.GetOne.build(board.getTeam()))
                     .board(BoardDto.GetOneWithPersonal.build(board))
                     .members(board.getBoardUsers().stream().map(boardUser -> UserDto.GetIdAndName.build(boardUser.getUser())).collect(Collectors.toList()))
                     .cardLists(board.getCardLists().stream().map(CardListDto.GetList::build).collect(Collectors.toList()))

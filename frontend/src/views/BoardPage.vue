@@ -1,197 +1,240 @@
 <template>
-	<div>
+	<div class="page">
 		<AppHeader></AppHeader>
-		<div class="page">
-			<div class="page-body">
-				<div class="board-wrapper">
-					<div class="board">
-						<div class="board-header">
-							<div class="board-name board-header-item">보드 이름</div>
-							<div class="board-header-divider"></div>
-							<div class="team-name board-header-item">
-								<span>팀 이름</span>
-								<span>Personal</span>
+		<div class="page-body">
+			<div class="board-wrapper">
+				<div class="board">
+					<div class="board-header">
+						<div class="board-name board-header-item">{{ board.name }}</div>
+						<div class="board-header-divider"></div>
+						<div class="team-name board-header-item">
+							<span v-if="!board.personal">{{ team.name }}</span>
+							<span v-if="board.personal">Personal</span>
+						</div>
+						<div class="board-header-divider"></div>
+						<div class="board-members board-header-item">
+							<div class="member" v-for="member in members" :key="member.id">
+								<span>{{ member.name }}</span>
 							</div>
-							<div class="board-header-divider"></div>
-							<div class="board-members board-header-item">
-								<div class="member">
-									<span>멤버 이름</span>
-								</div>
-								<div class="member add-member-toggle">
-									<span><font-awesome-icon icon="user-plus" /></span>
-								</div>
+							<div class="member add-member-toggle">
+								<span><font-awesome-icon icon="user-plus" /></span>
 							</div>
 						</div>
-						<div class="board-body">
-							<draggable v-model="cardLists" class="list-container">
-								<div
-									class="list-wrapper"
-									v-for="cardList in cardLists"
-									:key="cardList.id"
-								>
-									<div class="list">
-										<div class="list-header">{{ cardList.name }}</div>
-										<draggable
-											class="cards"
-											v-model="cardList.cards"
-											:options="{
-												animation: 0,
-												scrollSensitivity: 100,
-												touchStartThreshold: 20,
-											}"
-										>
-											<div
-												class="card-item"
-												v-for="card in cardList.cards"
-												:key="card.id"
-											>
-												<div class="card-title">{{ card.title }}</div>
-											</div>
-											<div
-												class="add-card-form-wrapper"
-												v-if="cardList.cardForm.open"
-											>
-												<form class="add-card-form">
-													<div class="form-group">
-														<textarea
-															class="form-control"
-															placeholder="Type card title here"
-														></textarea>
-													</div>
-													<v-btn depressed class="card-add__btn"> Add </v-btn>
-													<v-btn
-														depressed
-														class="card-cancel__btn"
-														@click="closeAddCardForm(cardList)"
-													>
-														Cancel
-													</v-btn>
-												</form>
-											</div>
-										</draggable>
-										<div
-											class="add-card-button"
-											v-show="!cardList.cardForm.open"
-											@click="openAddCardForm(cardList)"
-										>
-											+ Add a card
-										</div>
-									</div>
-								</div>
-								<div class="list-wrapper add-list">
-									<div
-										class="add-list-button"
-										v-show="!addListForm.open"
-										@click="openAddListForm()"
+					</div>
+					<div class="board-body">
+						<draggable v-model="cardLists" class="list-container">
+							<div
+								class="list-wrapper"
+								v-for="cardList in cardLists"
+								:key="cardList.id"
+							>
+								<div class="list">
+									<div class="list-header">{{ cardList.name }}</div>
+									<draggable
+										class="cards"
+										v-model="cardList.cards"
+										:options="{
+											animation: 0,
+											scrollSensitivity: 100,
+											touchStartThreshold: 20,
+										}"
 									>
-										+ Add a list
-									</div>
-									<form class="add-list-form" v-show="addListForm.open">
-										<div class="form-group">
-											<input
-												type="text"
-												class="form-control"
-												id="cardListName"
-												placeholder="Type list name here"
-											/>
-										</div>
-										<v-btn depressed class="card-add__btn"> AddList </v-btn>
-										<v-btn
-											depressed
-											class="card-cancel__btn"
-											@click="closeAddListForm()"
+										<div
+											class="card-item"
+											v-for="card in cardList.cards"
+											:key="card.id"
 										>
-											Cancel
-										</v-btn>
-									</form>
+											<div class="card-title">{{ card.title }}</div>
+										</div>
+										<div
+											class="add-card-form-wrapper"
+											v-if="cardList.cardForm.open"
+										>
+											<form class="add-card-form">
+												<div class="form-group">
+													<textarea
+														class="form-control"
+														v-model="cardList.cardForm.title"
+														placeholder="Type card title here"
+													></textarea>
+												</div>
+												<v-btn
+													depressed
+													class="card-add__btn"
+													@click="addCard(cardList)"
+												>
+													Add
+												</v-btn>
+												<v-btn
+													depressed
+													class="card-cancel__btn"
+													@click="closeAddCardForm(cardList)"
+												>
+													Cancel
+												</v-btn>
+											</form>
+										</div>
+									</draggable>
+									<div
+										class="add-card-button"
+										v-show="!cardList.cardForm.open"
+										@click="openAddCardForm(cardList)"
+									>
+										+ Add a card
+									</div>
 								</div>
-							</draggable>
-						</div>
+							</div>
+							<div class="list-wrapper add-list">
+								<div
+									class="add-list-button"
+									v-show="!addCardListForm.open"
+									@click="openAddCardListForm()"
+								>
+									+ Add a list
+								</div>
+								<form class="add-list-form" v-show="addCardListForm.open">
+									<div class="form-group">
+										<input
+											type="text"
+											class="form-control"
+											id="cardListName"
+											v-model="addCardListForm.name"
+											placeholder="Type list name here"
+										/>
+									</div>
+									<v-btn depressed class="card-add__btn" @click="addCardList()">
+										AddList
+									</v-btn>
+									<v-btn
+										depressed
+										class="card-cancel__btn"
+										@click="closeAddCardListForm()"
+									>
+										Cancel
+									</v-btn>
+								</form>
+							</div>
+						</draggable>
 					</div>
 				</div>
 			</div>
 		</div>
-		<AppFooter></AppFooter>
 	</div>
 </template>
 
 <script>
 import AppHeader from '@/components/common/AppHeader.vue';
-import AppFooter from '@/components/common/AppFooter.vue';
 import draggable from 'vuedraggable';
+import { createCardList, createCard } from '@/api/card';
+import { getBoard } from '@/api/board';
 
 export default {
 	data() {
 		return {
+			board: { id: this.$route.params.id, name: '', personal: false },
 			cardLists: [
-				{
-					id: 1,
-					name: '테스트 카드 리스트1',
-					title: '테스트 카드 타이틀1',
-					cards: [
-						{
-							id: 1,
-							title: '테스트 카드 리스트1의 카드1',
-						},
-						{
-							id: 2,
-							title: '테스트 카드 리스트1의 카드2',
-						},
-					],
-					cardForm: {
-						open: false,
-					},
-				},
-				{
-					id: 2,
-					name: '테스트 카드 리스트2',
-					title: '테스트 카드 타이틀2',
-					cards: [
-						{
-							id: 3,
-							title: '테스트 카드 리스트2의 카드1',
-						},
-						{
-							id: 4,
-							title: '테스트 카드 리스트2의 카드2',
-						},
-					],
-					cardForm: {
-						open: false,
-					},
-				},
+				/* {id, name, cards, cardForm} */
 			],
-			addListForm: {
+			team: { name: '' },
+			members: [
+				/* {id, name} */
+			],
+			addCardListForm: {
+				name: '',
 				open: false,
 			},
 		};
 	},
 	components: {
 		AppHeader,
-		AppFooter,
 		draggable,
+	},
+	async created() {
+		const { data } = await getBoard(this.board.id);
+		console.log(data);
+		this.team.name = data.team ? data.team.name : '';
+		this.board.personal = data.board.personal;
+		this.board.name = data.board.name;
+		data.members.forEach(member => {
+			this.members.push({
+				id: member.id,
+				name: member.name,
+			});
+		});
+		data.cardLists.sort((list1, list2) => {
+			return list1.position - list2.position;
+		});
+		data.cardLists.forEach(cardList => {
+			cardList.cards.sort((card1, card2) => {
+				return card1.position - card2.position;
+			});
+			this.cardLists.push({
+				id: cardList.id,
+				name: cardList.name,
+				cards: cardList.cards,
+				cardForm: {
+					open: false,
+					title: '',
+				},
+			});
+		});
 	},
 	methods: {
 		openAddCardForm(cardList) {
 			cardList.cardForm.open = true;
 		},
+		async addCard(cardList) {
+			const cardData = {
+				title: cardList.cardForm.title,
+				position: cardList.cards.length + 1,
+				cardListId: cardList.id,
+			};
+			const { data } = await createCard(cardData);
+			cardList.cards.push({
+				id: data.id,
+				title: data.title,
+			});
+			cardList.cardForm.title = '';
+			this.closeAddCardForm(cardList);
+		},
 		closeAddCardForm(cardList) {
 			cardList.cardForm.open = false;
 		},
-		openAddListForm() {
-			this.addListForm.open = true;
+
+		openAddCardListForm() {
+			this.addCardListForm.open = true;
 		},
-		closeAddListForm() {
-			this.addListForm.open = false;
+		async addCardList() {
+			const cardListData = {
+				boardId: this.board.id,
+				name: this.addCardListForm.name,
+				position: this.cardLists.length + 1,
+			};
+			const { data } = await createCardList(cardListData);
+			this.cardLists.push({
+				id: data.id,
+				name: data.name,
+				cards: [],
+				cardForm: { title: '', open: false },
+			});
+			this.closeAddCardListForm();
+		},
+		closeAddCardListForm() {
+			this.addCardListForm.name = '';
+			this.addCardListForm.open = false;
 		},
 	},
 };
 </script>
 
 <style scoped>
+.page {
+	height: 100%;
+}
+
 .page-body {
-	flex-grow: 1;
 	position: relative;
+	height: 100%;
 }
 
 .board-wrapper {
@@ -202,8 +245,15 @@ export default {
 	left: 0;
 }
 
+.board {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
 .board-header {
 	flex: none;
+	height: auto;
 	overflow: hidden;
 	position: relative;
 	padding: 8px 8px;
@@ -223,6 +273,12 @@ export default {
 	line-height: 32px;
 }
 
+.board-body {
+	height: 100%;
+	position: relative;
+	overflow: auto;
+}
+
 .board-name {
 	font-size: 18px;
 	line-height: 32px;
@@ -233,16 +289,12 @@ export default {
 	float: left;
 	height: 30px;
 	width: 30px;
-	margin: 0 0 0 -2px;
+	margin: 0 5px 0 -2px;
 	border-radius: 50%;
 	background-color: #377ef6;
-	position: relative;
 }
 
 .board-members span {
-	height: 30px;
-	line-height: 30px;
-	width: 30px;
 	text-align: center;
 	display: block;
 	color: #fff;
@@ -260,6 +312,14 @@ export default {
 
 .list-container {
 	margin: 10px;
+	position: absolute;
+	top: 0;
+	left: 8px;
+	right: 0;
+	bottom: 0;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
 }
 
 .list-wrapper {
@@ -269,10 +329,10 @@ export default {
 	border-radius: 10px;
 	width: 28%;
 	margin: 0 10px;
-	background: #eee;
 }
 
 .list {
+	background: #eee;
 	border-radius: 5px;
 	display: flex;
 	flex-direction: column;

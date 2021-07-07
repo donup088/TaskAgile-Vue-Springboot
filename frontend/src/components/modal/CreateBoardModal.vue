@@ -118,6 +118,10 @@ export default {
 	margin: 20px 0;
 }
 
+.modal-footer {
+	height: 50%;
+}
+
 .modal-default-button {
 	float: right;
 }

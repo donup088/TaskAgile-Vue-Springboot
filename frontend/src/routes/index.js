@@ -25,7 +25,7 @@ const router = new VueRouter({
 			meta: { auth: true },
 		},
 		{
-			path: '/board',
+			path: '/board/:id',
 			component: () => import('../views/BoardPage.vue'),
 			meta: { auth: true },
 		},

@@ -7,6 +7,7 @@
 					id="boardList"
 					class="boards__list"
 					v-for="board in personalBoards"
+					@click="openBoard(board)"
 					v-bind:key="board.id"
 				>
 					<h3>{{ board.name }}</h3>
@@ -25,6 +26,7 @@
 					class="boards__list"
 					v-for="board in team.boards"
 					v-bind:key="board.id"
+					@click="openBoard(board)"
 				>
 					<h3>{{ board.name }}</h3>
 					<p>{{ board.description }}</p>
@@ -85,6 +87,9 @@ export default {
 		},
 	},
 	methods: {
+		openBoard(board) {
+			this.$router.push(`/board/${board.id}`);
+		},
 		createBoard(teamId) {
 			if (teamId !== 0) {
 				this.selectedTeamId = teamId;
@@ -113,6 +118,7 @@ export default {
 <style scoped>
 .boards-container {
 	padding: 0 35px;
+	flex-flow: 1;
 }
 
 .boards-container h2 {

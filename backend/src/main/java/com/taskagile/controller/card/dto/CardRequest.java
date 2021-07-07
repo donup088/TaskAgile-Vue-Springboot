@@ -20,7 +20,7 @@ public class CardRequest {
     public static class CreateCard {
         @NotEmpty
         private String title;
-        @NotEmpty
+
         private String description;
         @NotNull
         private Integer position;

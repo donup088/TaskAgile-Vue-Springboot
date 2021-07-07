@@ -1,25 +1,24 @@
 <template>
-	<div>
-		<div class="main-container">
-			<AppHeader></AppHeader>
-			<BoardListItem></BoardListItem>
-		</div>
-		<AppFooter></AppFooter>
+	<div class="main-container">
+		<AppHeader></AppHeader>
+		<BoardListItem></BoardListItem>
 	</div>
 </template>
 
 <script>
 import AppHeader from '@/components/common/AppHeader.vue';
-import AppFooter from '@/components/common/AppFooter.vue';
 import BoardListItem from '@/components/BoardListItem.vue';
 
 export default {
 	components: {
 		AppHeader,
 		BoardListItem,
-		AppFooter,
 	},
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.main-container {
+	flex-grow: 1;
+}
+</style>

@@ -28,8 +28,6 @@ export default {};
 
 <style scoped>
 .footer {
-	position: absolute;
-	bottom: 0;
 	width: 100%;
 	padding: 0px 10px;
 	display: flex;
