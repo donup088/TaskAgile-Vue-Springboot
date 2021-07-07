@@ -16,7 +16,7 @@
 							<div class="member" v-for="member in members" :key="member.id">
 								<span>{{ member.name }}</span>
 							</div>
-							<div class="member add-member-toggle">
+							<div class="member add-member-toggle" @click="openAddMember()">
 								<span><font-awesome-icon icon="user-plus" /></span>
 							</div>
 						</div>
@@ -119,12 +119,19 @@
 				</div>
 			</div>
 		</div>
+		<AddBoardMemberModal
+			v-if="showAddMemberModal"
+			@close="showAddMemberModal = false"
+			@addMember="addedMember"
+		>
+		</AddBoardMemberModal>
 	</div>
 </template>
 
 <script>
 import AppHeader from '@/components/common/AppHeader.vue';
 import draggable from 'vuedraggable';
+import AddBoardMemberModal from '@/components/modal/AddBoardMemberModal.vue';
 import { createCardList, createCard } from '@/api/card';
 import { getBoard } from '@/api/board';
 
@@ -143,11 +150,13 @@ export default {
 				name: '',
 				open: false,
 			},
+			showAddMemberModal: false,
 		};
 	},
 	components: {
 		AppHeader,
 		draggable,
+		AddBoardMemberModal,
 	},
 	async created() {
 		const { data } = await getBoard(this.board.id);
@@ -222,6 +231,13 @@ export default {
 		closeAddCardListForm() {
 			this.addCardListForm.name = '';
 			this.addCardListForm.open = false;
+		},
+		openAddMember() {
+			this.showAddMemberModal = true;
+		},
+		addedMember(member) {
+			this.members.push(member);
+			this.showAddMemberModal = false;
 		},
 	},
 };

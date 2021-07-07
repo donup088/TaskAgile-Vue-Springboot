@@ -8,4 +8,8 @@ function getBoard(boardId) {
 	return instanceWithAuth.get(`/board/${boardId}`);
 }
 
-export { createBoard, getBoard };
+function addMember(boardId, memberData) {
+	return instanceWithAuth.post(`/board/${boardId}/member`, memberData);
+}
+
+export { createBoard, getBoard, addMember };

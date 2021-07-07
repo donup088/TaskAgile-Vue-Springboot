@@ -47,7 +47,8 @@ public class BoardService {
     }
 
     public BoardUser addMember(Long boardId, BoardRequest.AddMember request) {
-        //TODO 로그인 유저가 해당 보드의 BoardUser 인지 체크해야함
+        //TODO 로그인 유저가 해당 보드의 BoardUser 인지 체크해야함, 초대하려는 사람이 이미 팀원이면 팀 초대 X
+
         Board board = boardRepository.findById(boardId).orElseThrow(BoardNotFoundException::new);
         Team team = board.getTeam();
         if (team == null) {
@@ -55,7 +56,9 @@ public class BoardService {
         }
 
         User user = userRepository.findByName(request.getName()).orElseThrow(UserNotFoundException::new);
-        teamUserRepository.save(TeamUser.create(team, user));
+        if(teamUserRepository.findByUserIdAndTeamId(user.getId(),team.getId()).isEmpty()) {
+            teamUserRepository.save(TeamUser.create(team, user));
+        }
 
         return boardUserRepository.save(BoardUser.create(board, user));
     }
