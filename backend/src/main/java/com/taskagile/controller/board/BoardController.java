@@ -3,6 +3,7 @@ package com.taskagile.controller.board;
 import com.taskagile.controller.board.dto.BoardDto;
 import com.taskagile.controller.board.dto.BoardRequest;
 import com.taskagile.controller.board.dto.BoardResponse;
+import com.taskagile.controller.user.dto.UserDto;
 import com.taskagile.domain.board.Board;
 import com.taskagile.securiy.userdetails.CurrentUser;
 import com.taskagile.securiy.userdetails.CustomUserDetails;
@@ -28,5 +29,10 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public BoardResponse.GetBoard getBoard(@PathVariable Long boardId) {
         return BoardResponse.GetBoard.build(boardService.getBoard(boardId));
+    }
+
+    @PostMapping("/{boardId}/member")
+    public UserDto.GetIdAndName addMember(@PathVariable Long boardId, @RequestBody BoardRequest.AddMember request) {
+        return UserDto.GetIdAndName.build(boardService.addMember(boardId, request).getUser());
     }
 }

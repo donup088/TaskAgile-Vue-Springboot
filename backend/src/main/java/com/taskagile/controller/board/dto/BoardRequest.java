@@ -1,6 +1,6 @@
 package com.taskagile.controller.board.dto;
 
-import lombok.*;
+import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -12,5 +12,11 @@ public class BoardRequest {
         private String description;
         @NotEmpty
         private Long teamId;
+    }
+
+    @Getter
+    public static class AddMember {
+        @NotEmpty
+        private String name;
     }
 }

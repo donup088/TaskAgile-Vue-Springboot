@@ -2,8 +2,8 @@ POST {{apiUrl}}/user/register
 Content-Type: application/json;charset=UTF-8
 
 {
-  "name": "테스터",
-  "email": "{{TEST_USER_EMAIL}}",
+  "name": "테스터2",
+  "email": "{{TEST_USER_EMAIL}}2",
   "password": "{{TEST_USER_PASSWORD}}"
 }
 

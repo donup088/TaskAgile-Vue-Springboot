@@ -12,6 +12,16 @@ Authorization: {{authorizationToken}}
 
 GET {{apiUrl}}/board/1
 Content-Type: application/json;charset=UTF-8
+Authorization: {{authorizationToken}}\
+
+###
+
+POST {{apiUrl}}/board/2/member
+Content-Type: application/json;charset=UTF-8
 Authorization: {{authorizationToken}}
+
+{
+  "name": "테스터2"
+}
 
 
