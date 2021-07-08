@@ -20,3 +20,14 @@ Authorization: {{authorizationToken}}
   "position": 1,
   "cardListId": 1
 }
+
+###
+
+POST {{apiUrl}}/card/position
+Content-Type: application/json;charset=UTF-8
+Authorization: {{authorizationToken}}
+
+{
+  "firstCardId": 2,
+  "secondCardId": 3
+}

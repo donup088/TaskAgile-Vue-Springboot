@@ -27,4 +27,8 @@ public class CardController {
         return CardResponse.CreateCardList.build(cardService.createCardList(request));
     }
 
+    @PostMapping("/position")
+    public void swapCardPosition(@RequestBody @Valid CardRequest.SwapCardPosition request) {
+        cardService.swapPosition(request);
+    }
 }

@@ -4,7 +4,6 @@ export function setInterceptors(instance) {
 	// Add a request interceptor
 	instance.interceptors.request.use(
 		function (config) {
-			console.log(config);
 			config.headers.Authorization = 'Bearer ' + store.state.token;
 			return config;
 		},

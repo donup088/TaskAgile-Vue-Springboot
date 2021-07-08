@@ -32,6 +32,10 @@ public class Card extends BaseEntity {
         cardList.getCards().add(this);
     }
 
+    private void updatePosition(Integer position) {
+        this.position = position;
+    }
+
     public static Card create(CardRequest.CreateCard request, CardList cardList) {
         Card card = Card.builder()
                 .title(request.getTitle())
@@ -40,5 +44,11 @@ public class Card extends BaseEntity {
                 .build();
         card.setCardList(cardList);
         return card;
+    }
+
+    public static void swapPosition(Card firstCard, Card secondCard) {
+        Integer tempPosition = firstCard.getPosition();
+        firstCard.updatePosition(secondCard.getPosition());
+        secondCard.updatePosition(tempPosition);
     }
 }

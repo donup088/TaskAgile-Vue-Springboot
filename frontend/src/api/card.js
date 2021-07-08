@@ -8,4 +8,8 @@ function createCard(cardData) {
 	return instanceWithAuth.post('/card', cardData);
 }
 
-export { createCardList, createCard };
+function changeCardPosition(cardData) {
+	return instanceWithAuth.post('/card/position', cardData);
+}
+
+export { createCardList, createCard, changeCardPosition };

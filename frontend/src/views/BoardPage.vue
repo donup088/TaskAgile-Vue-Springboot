@@ -37,7 +37,7 @@
 										tag="ul"
 										:move="checkMove"
 										@start="drag = true"
-										@end="drag = false"
+										@end="endCardDrag"
 										:options="{
 											group: 'cards',
 											ghostClass: 'ghost',
@@ -143,7 +143,7 @@
 import AppHeader from '@/components/common/AppHeader.vue';
 import draggable from 'vuedraggable';
 import AddBoardMemberModal from '@/components/modal/AddBoardMemberModal.vue';
-import { createCardList, createCard } from '@/api/card';
+import { createCardList, createCard, changeCardPosition } from '@/api/card';
 import { getBoard } from '@/api/board';
 
 export default {
@@ -163,6 +163,8 @@ export default {
 			},
 			showAddMemberModal: false,
 			drag: false,
+			changeFirstCardId: '',
+			changeSecondCardId: '',
 		};
 	},
 	components: {
@@ -251,9 +253,19 @@ export default {
 			this.members.push(member);
 			this.showAddMemberModal = false;
 		},
-		checkMove: function (e) {
-			console.log(e.draggedContext.element.id);
-			console.log(e.relatedContext.element.id);
+		checkMove(e) {
+			this.drag = false;
+			this.changeFirstCardId = e.draggedContext.element.id;
+			this.changeSecondCardId = e.relatedContext.element.id;
+		},
+		endCardDrag() {
+			const cardData = {
+				firstCardId: this.changeFirstCardId,
+				secondCardId: this.changeSecondCardId,
+			};
+			changeCardPosition(cardData);
+			this.changeFirstCardId = '';
+			this.changeSecondCardId = '';
 		},
 	},
 };

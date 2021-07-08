@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/board")
@@ -20,7 +22,7 @@ public class BoardController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BoardDto.GetOne create(@RequestBody BoardRequest.create request, @CurrentUser CustomUserDetails customUserDetails) {
+    public BoardDto.GetOne create(@RequestBody @Valid BoardRequest.create request, @CurrentUser CustomUserDetails customUserDetails) {
         Board board = boardService.create(request, customUserDetails.getUser());
 
         return BoardDto.GetOne.build(board);
@@ -32,7 +34,7 @@ public class BoardController {
     }
 
     @PostMapping("/{boardId}/member")
-    public UserDto.GetIdAndName addMember(@PathVariable Long boardId, @RequestBody BoardRequest.AddMember request) {
+    public UserDto.GetIdAndName addMember(@PathVariable Long boardId, @RequestBody @Valid BoardRequest.AddMember request) {
         return UserDto.GetIdAndName.build(boardService.addMember(boardId, request).getUser());
     }
 }

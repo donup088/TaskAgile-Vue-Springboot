@@ -27,4 +27,12 @@ public class CardRequest {
         @NotNull
         private Long cardListId;
     }
+
+    @Getter
+    public static class SwapCardPosition {
+        @NotNull
+        private Long firstCardId;
+        @NotNull
+        private Long secondCardId;
+    }
 }
