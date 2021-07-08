@@ -11,6 +11,7 @@ export default {};
 
 <style scoped>
 .logo-wrapper {
+	margin-top: 15%;
 	text-align: center;
 	margin-bottom: 40px;
 }

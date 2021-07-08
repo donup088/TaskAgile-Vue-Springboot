@@ -41,9 +41,8 @@ export default {
 
 <style scoped>
 .page-header {
-	margin: 10px 0px;
 	width: 100%;
-	padding: 10px;
+	padding: 15px 10px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;

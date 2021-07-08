@@ -22,7 +22,8 @@
 						</div>
 					</div>
 					<div class="board-body">
-						<draggable v-model="cardLists" class="list-container">
+						<div class="list-container">
+							>
 							<div
 								class="list-wrapper"
 								v-for="cardList in cardLists"
@@ -33,48 +34,58 @@
 									<draggable
 										class="cards"
 										v-model="cardList.cards"
+										tag="ul"
+										:move="checkMove"
+										@start="drag = true"
+										@end="drag = false"
 										:options="{
-											animation: 0,
-											scrollSensitivity: 100,
-											touchStartThreshold: 20,
+											group: 'cards',
+											ghostClass: 'ghost',
+											animation: 200,
+											disabled: false,
 										}"
 									>
-										<div
-											class="card-item"
-											v-for="card in cardList.cards"
-											:key="card.id"
+										<transition-group
+											type="transition"
+											:name="!drag ? 'flip-list' : null"
 										>
-											<div class="card-title">{{ card.title }}</div>
-										</div>
-										<div
-											class="add-card-form-wrapper"
-											v-if="cardList.cardForm.open"
-										>
-											<form class="add-card-form">
-												<div class="form-group">
-													<textarea
-														class="form-control"
-														v-model="cardList.cardForm.title"
-														placeholder="Type card title here"
-													></textarea>
-												</div>
-												<v-btn
-													depressed
-													class="card-add__btn"
-													@click="addCard(cardList)"
-												>
-													Add
-												</v-btn>
-												<v-btn
-													depressed
-													class="card-cancel__btn"
-													@click="closeAddCardForm(cardList)"
-												>
-													Cancel
-												</v-btn>
-											</form>
-										</div>
+											<li
+												class="card-title"
+												v-for="card in cardList.cards"
+												:key="card.id"
+											>
+												{{ card.title }}
+											</li>
+										</transition-group>
 									</draggable>
+									<div
+										class="add-card-form-wrapper"
+										v-if="cardList.cardForm.open"
+									>
+										<form class="add-card-form">
+											<div class="form-group">
+												<textarea
+													class="form-control"
+													v-model="cardList.cardForm.title"
+													placeholder="Type card title here"
+												></textarea>
+											</div>
+											<v-btn
+												depressed
+												class="card-add__btn"
+												@click="addCard(cardList)"
+											>
+												Add
+											</v-btn>
+											<v-btn
+												depressed
+												class="card-cancel__btn"
+												@click="closeAddCardForm(cardList)"
+											>
+												Cancel
+											</v-btn>
+										</form>
+									</div>
 									<div
 										class="add-card-button"
 										v-show="!cardList.cardForm.open"
@@ -114,7 +125,7 @@
 									</v-btn>
 								</form>
 							</div>
-						</draggable>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -151,6 +162,7 @@ export default {
 				open: false,
 			},
 			showAddMemberModal: false,
+			drag: false,
 		};
 	},
 	components: {
@@ -239,6 +251,10 @@ export default {
 			this.members.push(member);
 			this.showAddMemberModal = false;
 		},
+		checkMove: function (e) {
+			console.log(e.draggedContext.element.id);
+			console.log(e.relatedContext.element.id);
+		},
 	},
 };
 </script>
@@ -247,12 +263,10 @@ export default {
 .page {
 	height: 100%;
 }
-
 .page-body {
 	position: relative;
 	height: 100%;
 }
-
 .board-wrapper {
 	position: absolute;
 	top: 0;
@@ -260,39 +274,27 @@ export default {
 	bottom: 0;
 	left: 0;
 }
-
 .board {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
 }
-
 .board-header {
 	flex: none;
 	height: auto;
-	overflow: hidden;
-	position: relative;
 	padding: 8px 8px;
 	margin-left: 10px;
 }
-
 .board-header-divider {
 	float: left;
-	border-left: 1px solid #ddd;
-	height: 16px;
+	border-left: 1px solid gray;
+	height: 18px;
 	margin: 8px 10px;
 }
-
 .board-header-item {
 	float: left;
 	height: 32px;
 	line-height: 32px;
-}
-
-.board-body {
-	height: 100%;
-	position: relative;
-	overflow: auto;
 }
 
 .board-name {
@@ -300,7 +302,6 @@ export default {
 	line-height: 32px;
 	margin-left: 8px;
 }
-
 .member {
 	float: left;
 	height: 30px;
@@ -309,21 +310,24 @@ export default {
 	border-radius: 50%;
 	background-color: #377ef6;
 }
-
 .board-members span {
 	text-align: center;
 	display: block;
 	color: #fff;
 }
-
 .add-member-toggle:hover {
 	background-color: #666;
 }
-
 .add-member-toggle {
 	margin-left: 5px;
 	background-color: #eee;
 	cursor: pointer;
+}
+
+.board-body {
+	height: 90%;
+	position: relative;
+	overflow: auto;
 }
 
 .list-container {
@@ -346,23 +350,27 @@ export default {
 	width: 28%;
 	margin: 0 10px;
 }
-
 .list {
 	background: #eee;
 	border-radius: 5px;
 	display: flex;
 	flex-direction: column;
-	max-height: 100%;
+	max-height: 98%;
 	position: relative;
+	overflow-y: auto;
 }
-
 .list-header {
 	font-weight: bold;
 	padding: 10px 8px;
 	margin: 0 8px 8px;
 }
 
-.card-item {
+.ghost {
+	opacity: 0.5;
+	background: #c8ebfb;
+}
+
+.card-title {
 	overflow: hidden;
 	background: #fff;
 	padding: 8px 8px;
@@ -371,7 +379,6 @@ export default {
 	box-shadow: 0 1px 0 #ccc;
 	cursor: pointer;
 }
-
 .add-card-button {
 	padding: 8px 10px;
 	color: #888;
@@ -379,21 +386,18 @@ export default {
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
 }
-
 .add-card-button:hover {
 	background: #dfdfdf;
 	color: #333;
 }
-
 .add-card-form-wrapper {
 	padding: 0 8px 8px;
 }
-
 .add-card-form-wrapper > .form-group {
 	margin-bottom: 5px;
 }
-
 .add-card-form-wrapper textarea {
+	width: 100%;
 	resize: none;
 	padding: 0.3rem 0.5rem;
 	box-shadow: none;
@@ -401,7 +405,6 @@ export default {
 .card-add__btn {
 	margin-right: 10px;
 }
-
 .list-wrapper.add-list {
 	background: #f4f4f4;
 	border-radius: 3px;
@@ -410,7 +413,6 @@ export default {
 	color: #888;
 	margin-right: 8px;
 }
-
 .add-list-button:hover {
 	background: #ddd;
 	cursor: pointer;
@@ -420,16 +422,13 @@ export default {
 .add-list-form {
 	padding: 5px;
 }
-
 .add-list-form > .form-group {
 	margin-bottom: 5px;
 }
-
 .add-list-form > .form-control {
 	height: calc(1.8rem + 2px);
 	padding: 0.375rem 0.3rem;
 }
-
 #cardListName {
 	width: 100%;
 	padding: 5px;

@@ -36,6 +36,6 @@ public class UserService {
             throw new PasswordWrongException();
         }
 
-        return UserResponse.Login.from(tokenProvider.generateAccessToken(user), new Token(user.getRefreshToken(), user.getRefreshTokenExpiredAt()));
+        return UserResponse.Login.from(user.getName(),tokenProvider.generateAccessToken(user), new Token(user.getRefreshToken(), user.getRefreshTokenExpiredAt()));
     }
 }

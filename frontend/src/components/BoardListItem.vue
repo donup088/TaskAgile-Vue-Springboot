@@ -118,7 +118,6 @@ export default {
 <style scoped>
 .boards-container {
 	padding: 0 35px;
-	flex-flow: 1;
 }
 
 .boards-container h2 {
@@ -128,7 +127,7 @@ export default {
 }
 
 .boards-section {
-	margin: 30px 10px;
+	margin: 25px 10px 5px 10px;
 }
 
 .boards {
@@ -181,7 +180,7 @@ export default {
 	color: #666;
 	cursor: pointer;
 	text-decoration: underline;
-	margin-bottom: 5;
+	margin-bottom: 40px;
 	padding: 15px;
 }
 </style>

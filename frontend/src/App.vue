@@ -30,8 +30,11 @@ export default {
 <style>
 @import './css/reset.css';
 @import './css/common.css';
+
 .app {
-	height: 100%;
+	display: flex;
+	flex-direction: column;
 	position: relative;
+	height: 100%;
 }
 </style>

@@ -99,6 +99,7 @@ export default {
 .registerForm {
 	width: 50%;
 }
+
 .registerBtn {
 	width: 100%;
 	margin-top: 35px;

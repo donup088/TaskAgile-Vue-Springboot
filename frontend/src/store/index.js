@@ -4,6 +4,7 @@ import {
 	getAuthFromCookie,
 	getUserFromCookie,
 	saveAuthToCookie,
+	saveUserToCookie,
 } from '@/utils/cookies';
 import { loginUser } from '@/api/auth';
 
@@ -66,6 +67,7 @@ export default new Vuex.Store({
 			const { data } = await loginUser(userData);
 			commit('setToken', data.accessToken);
 			saveAuthToCookie(data.accessToken);
+			saveUserToCookie(data.name);
 			return data;
 		},
 		OAUTHLOGIN({ commit }, token) {
