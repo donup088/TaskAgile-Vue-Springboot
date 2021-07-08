@@ -1,5 +1,5 @@
 <template>
-	<form class="loginForm">
+	<form class="loginForm" @submit.prevent="submitForm">
 		<v-text-field
 			v-model="email"
 			label="Email"
@@ -20,7 +20,7 @@
 				가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.
 			</span>
 		</p>
-		<v-btn class="loginBtn" @click="submitForm">로그인</v-btn>
+		<v-btn class="loginBtn" type="submit">로그인</v-btn>
 		<v-btn class="kakao_loginBtn" @click="kakaoLogin">카카오톡 로그인</v-btn>
 		<p class="pre-signup">
 			회원가입을 안하셨나요?

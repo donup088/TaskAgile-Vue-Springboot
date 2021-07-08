@@ -79,7 +79,6 @@ export default {
 	},
 	computed: {
 		personalBoards() {
-			console.log('11');
 			return this.$store.getters.getPersonalBoards;
 		},
 		teamBoards() {

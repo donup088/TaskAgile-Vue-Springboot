@@ -32,7 +32,6 @@
 								<div class="list">
 									<div class="list-header">{{ cardList.name }}</div>
 									<draggable
-										class="cards"
 										v-model="cardList.cards"
 										tag="ul"
 										:move="checkMove"
@@ -45,16 +44,15 @@
 											disabled: false,
 										}"
 									>
-										<transition-group
-											type="transition"
-											:name="!drag ? 'flip-list' : null"
-										>
+										<transition-group type="transition">
 											<li
-												class="card-title"
+												class="card"
 												v-for="card in cardList.cards"
 												:key="card.id"
 											>
-												{{ card.title }}
+												<p class="card-title">
+													{{ card.title }}
+												</p>
 											</li>
 										</transition-group>
 									</draggable>
@@ -351,7 +349,6 @@ export default {
 	bottom: 0;
 	overflow-x: auto;
 	overflow-y: hidden;
-	white-space: nowrap;
 }
 
 .list-wrapper {
@@ -359,9 +356,10 @@ export default {
 	height: 100%;
 	vertical-align: top;
 	border-radius: 10px;
-	width: 28%;
+	width: 30%;
 	margin: 0 10px;
 }
+
 .list {
 	background: #eee;
 	border-radius: 5px;
@@ -371,6 +369,7 @@ export default {
 	position: relative;
 	overflow-y: auto;
 }
+
 .list-header {
 	font-weight: bold;
 	padding: 10px 8px;
@@ -382,7 +381,7 @@ export default {
 	background: #c8ebfb;
 }
 
-.card-title {
+.card {
 	overflow: hidden;
 	background: #fff;
 	padding: 8px 8px;
@@ -391,6 +390,7 @@ export default {
 	box-shadow: 0 1px 0 #ccc;
 	cursor: pointer;
 }
+
 .add-card-button {
 	padding: 8px 10px;
 	color: #888;

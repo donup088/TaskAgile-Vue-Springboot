@@ -1,5 +1,5 @@
 <template>
-	<form class="registerForm">
+	<form class="registerForm" @submit.prevent="submitForm">
 		<v-text-field v-model="username" label="Username" required></v-text-field>
 		<p class="validation-text">
 			<span class="warning" v-if="!isUsernameValid && username">
@@ -31,7 +31,7 @@
 		<v-btn
 			:disabled="!isUsernameValid || !isEmailValid || !isPasswordValid"
 			class="registerBtn"
-			@click="submitForm"
+			type="submit"
 			>회원가입</v-btn
 		>
 		<p class="pre-signup">
