@@ -96,6 +96,7 @@ export default {
 			this.showBoardModal = true;
 		},
 		createdBoard() {
+			this.selectedTeamId = 0;
 			this.showBoardModal = false;
 		},
 		createTeam() {
