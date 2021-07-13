@@ -1,25 +1,18 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {
-	getAuthFromCookie,
-	getUserFromCookie,
-	saveAuthToCookie,
-	saveUserToCookie,
-} from '@/utils/cookies';
 import { loginUser } from '@/api/auth';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
-		username: getUserFromCookie() || '',
-		token: getAuthFromCookie() || '',
+		username: '',
 		teams: [],
 		boards: [],
 	},
 	getters: {
 		isLogin(state) {
-			return state.token !== '';
+			return state.username !== '';
 		},
 		getPersonalBoards(state) {
 			return state.boards.filter(board => board.teamId === 0);
@@ -37,12 +30,6 @@ export default new Vuex.Store({
 		},
 	},
 	mutations: {
-		setToken(state, token) {
-			state.token = token;
-		},
-		clearToken(state) {
-			state.token = '';
-		},
 		setUsername(state, username) {
 			state.username = username;
 		},
@@ -65,14 +52,12 @@ export default new Vuex.Store({
 	actions: {
 		async LOGIN({ commit }, userData) {
 			const { data } = await loginUser(userData);
-			commit('setToken', data.accessToken);
-			saveAuthToCookie(data.accessToken);
-			saveUserToCookie(data.name);
+			localStorage.setItem('accessToken', data.accessToken);
+			commit('setUsername', data.name);
 			return data;
 		},
-		OAUTHLOGIN({ commit }, token) {
-			commit('setToken', token);
-			saveAuthToCookie(token);
+		OAUTHLOGIN(token) {
+			localStorage.setItem('accessToken', token);
 		},
 	},
 });

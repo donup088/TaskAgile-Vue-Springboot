@@ -50,8 +50,8 @@ export default {
 					email: this.email,
 					password: this.password,
 				};
-				const response = await this.$store.dispatch('LOGIN', userData);
-				console.log(response);
+				await this.$store.dispatch('LOGIN', userData);
+
 				this.$router.push('/main');
 			} catch (error) {
 				const errResponse = error.response.data;
@@ -69,7 +69,7 @@ export default {
 			this.password = '';
 		},
 		kakaoLogin() {
-			window.location.href = 'http://localhost:8081/oauth2/authorization/kakao';
+			window.location.href = `${process.env.VUE_APP_URL}/oauth2/authorization/kakao`;
 		},
 	},
 };

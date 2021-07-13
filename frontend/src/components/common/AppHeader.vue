@@ -19,8 +19,6 @@
 </template>
 
 <script>
-import { deleteCookie } from '../../utils/cookies';
-
 export default {
 	methods: {
 		goMain() {
@@ -29,9 +27,7 @@ export default {
 		logoutUser() {
 			if (confirm('로그아웃 하시겠습니까?')) {
 				this.$store.commit('clearUsername');
-				this.$store.commit('clearToken');
-				deleteCookie('taskagile_auth');
-				deleteCookie('taskagile_user');
+				localStorage.removeItem('access_token');
 				this.$router.push('/login');
 			}
 		},
