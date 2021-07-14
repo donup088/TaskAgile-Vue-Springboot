@@ -172,7 +172,6 @@ export default {
 	},
 	async created() {
 		const { data } = await getBoard(this.board.id);
-		console.log(data);
 		this.team.name = data.team ? data.team.name : '';
 		this.board.personal = data.board.personal;
 		this.board.name = data.board.name;
@@ -288,19 +287,22 @@ export default {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	width: 100%;
 }
 .board-header {
-	flex: none;
-	height: auto;
+	width: 100%;
+	height: 5%;
 	padding: 8px 8px;
 	margin-left: 10px;
 }
+
 .board-header-divider {
 	float: left;
 	border-left: 1px solid gray;
 	height: 18px;
 	margin: 8px 10px;
 }
+
 .board-header-item {
 	float: left;
 	height: 32px;
@@ -320,6 +322,7 @@ export default {
 	border-radius: 50%;
 	background-color: #377ef6;
 }
+
 .board-members span {
 	text-align: center;
 	display: block;
@@ -335,28 +338,29 @@ export default {
 }
 
 .board-body {
+	width: 100%;
 	height: 90%;
 	position: relative;
-	overflow: auto;
+	overflow-x: auto;
 }
 
 .list-container {
+	display: flex;
+	width: 100%;
 	margin: 10px;
 	position: absolute;
 	top: 0;
 	left: 8px;
 	right: 0;
 	bottom: 0;
-	overflow-x: auto;
-	overflow-y: hidden;
 }
 
 .list-wrapper {
 	display: inline-block;
+	min-width: 200px;
 	height: 100%;
 	vertical-align: top;
 	border-radius: 10px;
-	width: 30%;
 	margin: 0 10px;
 }
 
@@ -414,15 +418,15 @@ export default {
 	padding: 0.3rem 0.5rem;
 	box-shadow: none;
 }
+
 .card-add__btn {
 	margin-right: 10px;
 }
-.list-wrapper.add-list {
+
+.list-wrapper > .add-list {
 	background: #f4f4f4;
 	border-radius: 3px;
 	box-sizing: border-box;
-	height: auto;
-	color: #888;
 	margin-right: 8px;
 }
 .add-list-button:hover {

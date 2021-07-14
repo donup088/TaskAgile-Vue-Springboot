@@ -50,7 +50,7 @@ export default {
 			};
 			const { data } = await createTeam(teamData);
 			console.log(data);
-			this.$store.commit('addTeam', data);
+			this.$store.commit('board/addTeam', data);
 			this.$emit('created');
 		},
 		close() {

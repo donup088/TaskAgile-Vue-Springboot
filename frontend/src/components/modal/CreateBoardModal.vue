@@ -59,8 +59,7 @@ export default {
 				teamId: this.selectedTeamId,
 			};
 			const { data } = await createBoard(boardData);
-			console.log(data);
-			this.$store.commit('addBoard', data);
+			this.$store.commit('board/addBoard', data);
 			this.$emit('created');
 		},
 		close() {

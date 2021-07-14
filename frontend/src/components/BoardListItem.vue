@@ -79,10 +79,10 @@ export default {
 	},
 	computed: {
 		personalBoards() {
-			return this.$store.getters.getPersonalBoards;
+			return this.$store.getters['board/getPersonalBoards'];
 		},
 		teamBoards() {
-			return this.$store.getters.getTeamBoards;
+			return this.$store.getters['board/getTeamBoards'];
 		},
 	},
 	methods: {
@@ -108,9 +108,9 @@ export default {
 	},
 	async created() {
 		const { data } = await getMyTeamAndBoard();
-		this.$store.commit('setUsername', data.user.name);
-		this.$store.commit('setBoards', data.boards);
-		this.$store.commit('setTeams', data.teams);
+		this.$store.commit('user/setUsername', data.user.name);
+		this.$store.commit('board/setBoards', data.boards);
+		this.$store.commit('board/setTeams', data.teams);
 	},
 };
 </script>

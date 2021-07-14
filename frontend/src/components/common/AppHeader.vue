@@ -9,7 +9,9 @@
 			<input type="text" placeholder="Search" class="search__input" />
 		</div>
 		<div class="dropdown">
-			<button class="dropbtn">{{ $store.state.username }}</button>
+			<button class="dropbtn">
+				{{ $store.getters['user/getUsername'] }}
+			</button>
 			<div class="dropdown-content">
 				<a href="#">내 정보</a>
 				<a @click="logoutUser">로그아웃</a>

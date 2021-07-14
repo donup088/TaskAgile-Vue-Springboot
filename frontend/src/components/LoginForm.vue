@@ -50,7 +50,7 @@ export default {
 					email: this.email,
 					password: this.password,
 				};
-				await this.$store.dispatch('LOGIN', userData);
+				await this.$store.dispatch('user/LOGIN', userData);
 
 				this.$router.push('/main');
 			} catch (error) {
