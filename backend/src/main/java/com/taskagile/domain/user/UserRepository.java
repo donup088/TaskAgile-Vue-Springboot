@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsUserByKakaoId(Long kakaoId);
 
     Optional<User> findByName(String name);
+
+    Optional<User> findByKakaoId(Long kakaoId);
 }

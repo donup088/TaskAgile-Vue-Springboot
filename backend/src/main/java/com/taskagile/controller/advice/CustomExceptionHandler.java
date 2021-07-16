@@ -12,7 +12,7 @@ public class CustomExceptionHandler {
     public ResponseEntity<ErrorResponse> businessExceptionHandler(BusinessException ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status("400")
-                .error("BadRequest")
+                .error(ex.getClass().getSimpleName())
                 .message(ex.getMessage())
                 .build();
 

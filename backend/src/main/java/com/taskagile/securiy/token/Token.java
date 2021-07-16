@@ -1,6 +1,8 @@
 package com.taskagile.securiy.token;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -8,6 +10,8 @@ import java.time.ZoneId;
 import java.util.Date;
 
 @Getter
+@Builder
+@NoArgsConstructor
 public class Token {
     private String token;
     private LocalDateTime expiredAt;

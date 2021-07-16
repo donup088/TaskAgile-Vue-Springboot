@@ -14,34 +14,31 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class JwtTokenProvider {
+public class TokenProvider {
     private final JwtProps jwtProps;
 
     public Token generateAccessToken(String id) {
-        return generateToken(id, jwtProps.getAccessTokenProps());
+        return generateAccessToken(id, jwtProps.getAccessTokenProps());
     }
 
     public Token generateAccessToken(User user) {
-        return generateToken(user, jwtProps.getAccessTokenProps());
+        return generateAccessToken(user, jwtProps.getAccessTokenProps());
     }
 
-    public Token generateRefreshToken(User user) {
-        return generateToken(user, jwtProps.getRefreshTokenProps());
+    public Token generateRefreshToken() {
+        return generateRefreshToken(jwtProps.getRefreshTokenProps());
     }
 
     public Long getUserIdFromAccessToken(String token) throws RuntimeException {
         return Long.valueOf(getClaims(token, jwtProps.getAccessTokenProps()).getBody().getSubject());
     }
 
-    public Long getUserIdFromRefreshToken(String token) throws RuntimeException {
-        return Long.valueOf(getClaims(token, jwtProps.getRefreshTokenProps()).getBody().getSubject());
-    }
-
-    private Token generateToken(User user, JwtProps.TokenProps tokenProps) {
+    private Token generateAccessToken(User user, JwtProps.TokenProps tokenProps) {
         SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(tokenProps.getSecret()));
 
         Date exp = new Date((new Date()).getTime() + tokenProps.getExpirationTimeMilliSec());
@@ -55,7 +52,14 @@ public class JwtTokenProvider {
         return Token.create(token, exp);
     }
 
-    private Token generateToken(String id, JwtProps.TokenProps tokenProps) {
+    private Token generateRefreshToken(JwtProps.TokenProps tokenProps) {
+        String token = UUID.randomUUID().toString();
+        Date exp = new Date((new Date()).getTime() + tokenProps.getExpirationTimeMilliSec());
+
+        return Token.create(token, exp);
+    }
+
+    private Token generateAccessToken(String id, JwtProps.TokenProps tokenProps) {
         SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(tokenProps.getSecret()));
 
         Date exp = new Date((new Date()).getTime() + tokenProps.getExpirationTimeMilliSec());

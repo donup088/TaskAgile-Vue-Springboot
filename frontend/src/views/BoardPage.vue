@@ -357,7 +357,7 @@ export default {
 
 .list-wrapper {
 	display: inline-block;
-	min-width: 200px;
+	min-width: 300px;
 	height: 100%;
 	vertical-align: top;
 	border-radius: 10px;

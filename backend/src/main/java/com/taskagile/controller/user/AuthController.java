@@ -11,8 +11,8 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/api/user")
-public class UserController {
+@RequestMapping(path = "/api/auth")
+public class AuthController {
     private final UserService userService;
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -24,5 +24,10 @@ public class UserController {
     @PostMapping("/login")
     public UserResponse.Login login(@RequestBody @Valid UserRequest.Login request) {
         return userService.login(request.getEmail(), request.getPassword());
+    }
+
+    @PostMapping("/refreshtoken")
+    public UserResponse.Login refreshToken(@RequestBody UserRequest.RefreshToken request){
+        return userService.refreshToken(request);
     }
 }

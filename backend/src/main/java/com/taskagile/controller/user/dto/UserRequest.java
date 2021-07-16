@@ -22,4 +22,10 @@ public class UserRequest {
 
         private String password;
     }
+
+    @Getter
+    public static class RefreshToken {
+        @NotEmpty
+        private Long userId;
+    }
 }

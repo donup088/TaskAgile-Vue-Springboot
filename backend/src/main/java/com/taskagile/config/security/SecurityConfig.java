@@ -1,7 +1,7 @@
 package com.taskagile.config.security;
 
 import com.taskagile.securiy.token.JwtTokenAuthenticationFilter;
-import com.taskagile.securiy.token.JwtTokenProvider;
+import com.taskagile.securiy.token.TokenProvider;
 import com.taskagile.securiy.userdetails.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final JwtTokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
     private final CustomUserDetailsService customUserDetailsService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
@@ -49,8 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/user/register").permitAll()
-                .antMatchers("/api/user/login").permitAll()
+                .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/oauth2/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
