@@ -1,6 +1,6 @@
 import { refreshToken } from '@/api/auth';
 import axios from 'axios';
-
+import router from '@/routes/index';
 import store from '@/store/index';
 
 export function setInterceptors(instance) {
@@ -31,12 +31,14 @@ export function setInterceptors(instance) {
 				const userRefreshReq = {
 					userId: store.getters['user/getUserId'],
 				};
-
-				const { data } = await refreshToken(userRefreshReq);
-
-				localStorage.setItem('accessToken', data.accessToken);
-				error.response.config.headers.Authorization =
-					'Bearer ' + data.accessToken;
+				try {
+					const { data } = await refreshToken(userRefreshReq);
+					localStorage.setItem('accessToken', data.accessToken);
+					error.response.config.headers.Authorization =
+						'Bearer ' + data.accessToken;
+				} catch (error) {
+					router.push('/login');
+				}
 				return axios(config);
 			}
 
