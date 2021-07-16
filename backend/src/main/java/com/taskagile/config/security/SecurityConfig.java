@@ -1,5 +1,6 @@
 package com.taskagile.config.security;
 
+import com.taskagile.securiy.token.JwtAuthEntryPoint;
 import com.taskagile.securiy.token.JwtTokenAuthenticationFilter;
 import com.taskagile.securiy.token.TokenProvider;
 import com.taskagile.securiy.userdetails.CustomUserDetailsService;
@@ -20,9 +21,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenProvider tokenProvider;
     private final CustomUserDetailsService customUserDetailsService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final JwtAuthEntryPoint jwtAuthEntryPoint;
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -47,6 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()

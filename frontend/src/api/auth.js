@@ -1,11 +1,15 @@
 import { instance } from './index';
 
 function registerUser(userData) {
-	return instance.post('/user/register', userData);
+	return instance.post('/auth/register', userData);
 }
 
 function loginUser(userData) {
-	return instance.post('/user/login', userData);
+	return instance.post('/auth/login', userData);
 }
 
-export { registerUser, loginUser };
+function refreshToken(userData) {
+	return instance.post('/auth/refreshtoken', userData);
+}
+
+export { registerUser, loginUser, refreshToken };

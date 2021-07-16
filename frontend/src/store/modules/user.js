@@ -3,6 +3,7 @@ import { loginUser } from '@/api/auth';
 export default {
 	namespaced: true,
 	state: {
+		userId: '',
 		username: '',
 	},
 	getters: {
@@ -12,8 +13,17 @@ export default {
 		getUsername(state) {
 			return state.username;
 		},
+		getUserId(state) {
+			return state.userId;
+		},
 	},
 	mutations: {
+		setUserId(state, userId) {
+			state.userId = userId;
+		},
+		clearUserId(state) {
+			state.userId = '';
+		},
 		setUsername(state, username) {
 			state.username = username;
 		},
@@ -26,6 +36,7 @@ export default {
 			const { data } = await loginUser(userData);
 			localStorage.setItem('accessToken', data.accessToken);
 			console.log(data);
+			commit('setUserId', data.id);
 			commit('setUsername', data.name);
 			return data;
 		},

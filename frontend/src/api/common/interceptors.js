@@ -1,3 +1,8 @@
+import { refreshToken } from '@/api/auth';
+import axios from 'axios';
+
+import store from '@/store/index';
+
 export function setInterceptors(instance) {
 	// Add a request interceptor
 	instance.interceptors.request.use(
@@ -14,14 +19,27 @@ export function setInterceptors(instance) {
 
 	// Add a response interceptor
 	instance.interceptors.response.use(
-		function (response) {
-			// Any status code that lie within the range of 2xx cause this function to trigger
-			// Do something with response data
+		response => {
 			return response;
 		},
-		function (error) {
-			// Any status codes that falls outside the range of 2xx cause this function to trigger
-			// Do something with response error
+		async error => {
+			const {
+				config,
+				response: { status },
+			} = error;
+			if (status === 401) {
+				const userRefreshReq = {
+					userId: store.getters['user/getUserId'],
+				};
+
+				const { data } = await refreshToken(userRefreshReq);
+
+				localStorage.setItem('accessToken', data.accessToken);
+				error.response.config.headers.Authorization =
+					'Bearer ' + data.accessToken;
+				return axios(config);
+			}
+
 			return Promise.reject(error);
 		},
 	);

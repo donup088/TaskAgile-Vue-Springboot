@@ -1,11 +1,7 @@
 package com.taskagile.securiy.token;
 
 import com.taskagile.domain.user.User;
-import com.taskagile.exception.BusinessException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +30,7 @@ public class TokenProvider {
         return generateRefreshToken(jwtProps.getRefreshTokenProps());
     }
 
-    public Long getUserIdFromAccessToken(String token) throws RuntimeException {
+    public Long getUserIdFromAccessToken(String token) {
         return Long.valueOf(getClaims(token, jwtProps.getAccessTokenProps()).getBody().getSubject());
     }
 
@@ -72,7 +68,7 @@ public class TokenProvider {
         return Token.create(token, exp);
     }
 
-    private Jws<Claims> getClaims(String token, JwtProps.TokenProps tokenProps) throws RuntimeException {
+    private Jws<Claims> getClaims(String token, JwtProps.TokenProps tokenProps) {
         SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(tokenProps.getSecret()));
         Jws<Claims> claims = null;
 
@@ -81,10 +77,16 @@ public class TokenProvider {
                     .setSigningKey(key)
                     .build()
                     .parseClaimsJws(token);
-        } catch (JwtException ex) {
-            log.error(ex.getMessage());
-            throw new BusinessException("다시 로그인 해주세요");
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+            log.info("잘못된 JWT 서명입니다.");
+        } catch (ExpiredJwtException e) {
+            log.info("만료된 JWT 토큰입니다.");
+        } catch (UnsupportedJwtException e) {
+            log.info("지원되지 않는 JWT 토큰입니다.");
+        } catch (IllegalArgumentException e) {
+            log.info("JWT 토큰이 잘못되었습니다.");
         }
+
         return claims;
     }
 }
