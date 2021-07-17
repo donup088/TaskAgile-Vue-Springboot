@@ -28,8 +28,8 @@ export default {
 		},
 		logoutUser() {
 			if (confirm('로그아웃 하시겠습니까?')) {
-				this.$store.commit('clearUsername');
-				localStorage.removeItem('access_token');
+				this.$store.commit('user/clearUsername');
+				localStorage.removeItem('accessToken');
 				this.$router.push('/login');
 			}
 		},

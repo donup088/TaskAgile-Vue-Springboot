@@ -19,7 +19,7 @@ export default {
 		checkUrl() {
 			const urlToken = location.href.split('token=')[1];
 			if (urlToken) {
-				this.$store.dispatch('OAUTHLOGIN', urlToken);
+				localStorage.setItem('accessToken', urlToken);
 				location.href = '/main';
 			}
 		},

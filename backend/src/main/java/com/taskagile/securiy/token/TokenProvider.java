@@ -18,10 +18,6 @@ import java.util.UUID;
 public class TokenProvider {
     private final JwtProps jwtProps;
 
-    public Token generateAccessToken(String id) {
-        return generateAccessToken(id, jwtProps.getAccessTokenProps());
-    }
-
     public Token generateAccessToken(User user) {
         return generateAccessToken(user, jwtProps.getAccessTokenProps());
     }
@@ -51,19 +47,6 @@ public class TokenProvider {
     private Token generateRefreshToken(JwtProps.TokenProps tokenProps) {
         String token = UUID.randomUUID().toString();
         Date exp = new Date((new Date()).getTime() + tokenProps.getExpirationTimeMilliSec());
-
-        return Token.create(token, exp);
-    }
-
-    private Token generateAccessToken(String id, JwtProps.TokenProps tokenProps) {
-        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(tokenProps.getSecret()));
-
-        Date exp = new Date((new Date()).getTime() + tokenProps.getExpirationTimeMilliSec());
-        String token = Jwts.builder()
-                .setSubject(String.valueOf(id))
-                .setExpiration(exp)
-                .signWith(key)
-                .compact();
 
         return Token.create(token, exp);
     }

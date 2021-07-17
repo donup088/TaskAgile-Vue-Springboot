@@ -34,14 +34,17 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String kakaoId = String.valueOf(oauth2User.getAttributes().get("id"));
         User user = userRepository.findByKakaoId(Long.valueOf(kakaoId)).orElseThrow(UserNotFoundException::new);
 
+        Token token = tokenProvider.generateAccessToken(user);
         Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByUserId(user.getId());
-        Token token = tokenProvider.generateAccessToken(kakaoId);
+        Token createdRefreshToken = tokenProvider.generateRefreshToken();
+
         if (optionalRefreshToken.isPresent()) {
-            optionalRefreshToken.get().update(token.getToken(), token.getExpiredAt());
+            optionalRefreshToken.get().update(createdRefreshToken.getToken(), createdRefreshToken.getExpiredAt());
         } else {
-            RefreshToken refreshToken = RefreshToken.create(token.getToken(), token.getExpiredAt(), user);
+            RefreshToken refreshToken = RefreshToken.create(createdRefreshToken.getToken(), createdRefreshToken.getExpiredAt(), user);
             refreshTokenRepository.save(refreshToken);
         }
+
         response.sendRedirect(url + token.getToken());
     }
 }

@@ -8,7 +8,7 @@ export default {
 	},
 	getters: {
 		isLogin() {
-			return localStorage.getItem('access_token') !== '';
+			return localStorage.getItem('accessToken') !== '';
 		},
 		getUsername(state) {
 			return state.username;
@@ -35,13 +35,9 @@ export default {
 		async LOGIN({ commit }, userData) {
 			const { data } = await loginUser(userData);
 			localStorage.setItem('accessToken', data.accessToken);
-			console.log(data);
 			commit('setUserId', data.id);
 			commit('setUsername', data.name);
 			return data;
-		},
-		OAUTHLOGIN(token) {
-			localStorage.setItem('accessToken', token);
 		},
 	},
 };
