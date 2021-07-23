@@ -18,7 +18,22 @@ matrix:
 
       script: "./gradlew clean build"
 
-      notifications:
-        email:
-          recipients:
-            - donup088@gmail.com
+      before_deploy:
+        - zip -r Taskagile-Vue-Springboot *
+        - mkdir -p deploy
+        - mv Taskagile-Vue-Springboot.zip deploy/Taskagile-Vue-Springboot.zip
+      deploy:
+        - provider: s3
+          access_key_id: $AWS_ACCESS_KEY
+          secret_access_key: $AWS_SECRET_KEY
+          bucket: taskagile-backend-build
+          region: ap-northeast-2
+          skip_cleanup: true
+          acl: private
+          local_dir: deploy
+          wait-until-deployed: true
+
+notifications:
+  email:
+    recipients:
+      - donup088@gmail.com
