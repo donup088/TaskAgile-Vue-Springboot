@@ -1,0 +1,25 @@
+matrix:
+  include:
+    - language: java
+      jdk:
+        - openjdk11
+
+      branches:
+        only:
+          - master
+
+      cache:
+        directories:
+          - '$HOME/.m2/repository'
+          - '$HOME/.gradle'
+
+      before_install:
+        - cd back-end/
+        - chmod +x gradlew
+
+      script: "./gradlew clean build"
+
+      notifications:
+        email:
+          recipients:
+            - donup088@gmail.com

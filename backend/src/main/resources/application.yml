@@ -5,14 +5,9 @@ spring:
   application:
     name: TASKAGILE
   profiles:
+    include: real-db
     group:
       dev: dev
-      test: test
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: 'jdbc:mysql://127.0.0.1:3306/taskagile?serverTimezone=Asia/Seoul&charset=UTF-8'
-    username: root
-    password: pass
   jpa:
     hibernate:
       ddl-auto: validate
@@ -41,17 +36,9 @@ jwt:
   refresh-token-props:
     secret: '3NuzNV3kkmNln/fqxyjqxKDA/1WaaS+V83KYTT8jmX1VpKsMskbqS+xFR3Cv1P9MmskDX3WdHcWka/dgvkGMQg=='
     expiration-time-milli-sec: 864000000
----
-spring.config.activate.on-profile: dev
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: 'jdbc:mysql://127.0.0.1:3306/taskagile?serverTimezone=Asia/Seoul&charset=UTF-8'
-    username: root
-    password: pass
 
 ---
-spring.config.activate.on-profile: test
+spring.config.activate.on-profile: dev
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
