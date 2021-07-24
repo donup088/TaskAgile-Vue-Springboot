@@ -21,6 +21,6 @@ public class ProfileController {
         for (String profile : profiles) {
             System.out.println("profile = " + profile);
         }
-        return "success";
+        return "success-and-change";
     }
 }
