@@ -26,6 +26,7 @@ matrix:
         - cd before-deploy && zip -r before-deploy *
         - cd ../ && mkdir -p deploy
         - mv before-deploy/before-deploy.zip deploy/Taskagile-Vue-Springboot.zip
+
       deploy:
         - provider: s3
           access_key_id: $AWS_ACCESS_KEY
@@ -46,6 +47,47 @@ matrix:
           bundle_type: zip # 압축 확장자
           application: taskagile-test # 웹 콘솔에서 등록한 CodeDeploy 애플리케이션
           deployment_group: taskagile-test-group # 웹 콘솔에서 등록한 CodeDeploy 배포그룹
+          region: ap-northeast-2
+          wait-until-deployed: true
+
+    - language: node.js
+      node_js:
+        - "stable"
+
+      before_install:
+        - cd frontend/
+
+      script:
+        - npm run build
+
+      before_deploy:
+        - mkdir -p before-frontend-deploy
+        - cp scripts/*.sh before-frontend-deploy/
+        - cp appspec.yml before-frontend-deploy/
+        - cp -r dist before-frontend-deploy
+        - cd before-frontend-deploy && zip -r before-frontend-deploy *
+        - cd ../ && mkdir -p deploy-frontend
+        - mv before-frontend-deploy/before-frontend-deploy.zip deploy-frontend/front-end.zip
+
+      deploy:
+        - provider: s3
+          access_key_id: $AWS_ACCESS_KEY
+          secret_access_key: $AWS_SECRET_KEY
+          bucket: taskagile-frontend-build
+          region: ap-northeast-2
+          skip_cleanup: true
+          acl: private
+          local_dir: deploy-frontend
+          wait-until-deployed: true
+
+        - provider: codedeploy
+          access_key_id: $AWS_ACCESS_KEY
+          secret_access_key: $AWS_SECRET_KEY
+          bucket: taskagile-frontend-build
+          key: front-end.zip
+          bundle_type: zip
+          application: taskagile-front-service
+          deployment_group: taskagile-test-front-group
           region: ap-northeast-2
           wait-until-deployed: true
 
