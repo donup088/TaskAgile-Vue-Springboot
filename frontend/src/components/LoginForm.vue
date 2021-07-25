@@ -23,7 +23,7 @@
 		<v-btn class="loginBtn" type="submit">로그인</v-btn>
 		<v-btn class="kakao_loginBtn" @click="kakaoLogin">카카오톡 로그인</v-btn>
 		<p class="pre-signup">
-			회원가입을 안하셨나요?
+			회원가입을 안하셨나요? 배포 자동화 테스트~
 			<a href="/signup">회원가입하러가기</a>
 		</p>
 		<p class="findPassword"><a href="#">비밀번호를 잊어버리셨나요?</a></p>
