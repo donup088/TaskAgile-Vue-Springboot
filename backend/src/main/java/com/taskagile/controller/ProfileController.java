@@ -18,9 +18,12 @@ public class ProfileController {
     @GetMapping("/profile")
     public String profile(){
         List<String> profiles= Arrays.asList(environment.getActiveProfiles());
-        for (String profile : profiles) {
-            System.out.println("profile = " + profile);
-        }
-        return "success-and-change";
+        List<String> realProfiles = Arrays.asList("deploy1", "delploy2");
+        String defaultProfile = profiles.isEmpty() ? "default" : profiles.get(0);
+
+        return profiles.stream()
+                .filter(realProfiles::contains)
+                .findAny()
+                .orElse(defaultProfile);
     }
 }
