@@ -22,6 +22,7 @@
 		</p>
 		<v-btn class="loginBtn" type="submit">로그인</v-btn>
 		<v-btn class="kakao_loginBtn" @click="kakaoLogin">카카오톡 로그인</v-btn>
+		<v-btn class="google_loginBtn" @click="googleLogin">구글 로그인</v-btn>
 		<p class="pre-signup">
 			회원가입을 안하셨나요? 배포 자동화 테스트~
 			<a href="/signup">회원가입하러가기</a>
@@ -71,6 +72,9 @@ export default {
 		kakaoLogin() {
 			window.location.href = `${process.env.VUE_APP_URL}/oauth2/authorization/kakao`;
 		},
+		googleLogin() {
+			window.location.href = `${process.env.VUE_APP_URL}/oauth2/authorization/google`;
+		},
 	},
 };
 </script>
@@ -100,5 +104,11 @@ export default {
 	width: 100%;
 	margin-top: 15px;
 	background-color: rgb(241, 241, 16) !important;
+}
+
+.google_loginBtn {
+	width: 100%;
+	margin-top: 15px;
+	background-color: rgb(94, 143, 216) !important;
 }
 </style>

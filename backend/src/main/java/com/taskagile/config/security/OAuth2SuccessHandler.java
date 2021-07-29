@@ -16,11 +16,13 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -31,8 +33,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
-        String kakaoId = String.valueOf(oauth2User.getAttributes().get("id"));
-        User user = userRepository.findByKakaoId(Long.valueOf(kakaoId)).orElseThrow(UserNotFoundException::new);
+        String oAuthId = null;
+        if (oauth2User.getAttributes().get("sub") != null) {
+            oAuthId = String.valueOf(oauth2User.getAttributes().get("sub"));
+        } else {
+            oAuthId = String.valueOf(oauth2User.getAttributes().get("id"));
+        }
+        User user = userRepository.findByOauthId(oAuthId).orElseThrow(UserNotFoundException::new);
 
         Token token = tokenProvider.generateAccessToken(user);
         Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByUserId(user.getId());

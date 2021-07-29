@@ -15,6 +15,14 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 100
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 클라이언트 키
+            client-secret: 비밀 키
+            scope: profile, email
 
 logging.level:
   org.hibernate.SQL: debug

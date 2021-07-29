@@ -2,7 +2,6 @@ package com.taskagile.securiy.token;
 
 import com.taskagile.securiy.userdetails.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Slf4j
+
 @RequiredArgsConstructor
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     private final TokenProvider tokenProvider;
@@ -32,6 +31,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             UserDetails userDetails = customUserDetailsService.loadUserById(userId);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
 
@@ -40,11 +40,9 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
     private String getAccessTokenFromRequest(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
-
         if (StringUtils.hasText(token) && token.startsWith("Bearer")) {
             return token.substring(7);
         }
-
         return null;
     }
 }
