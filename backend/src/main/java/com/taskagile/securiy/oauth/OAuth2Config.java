@@ -1,4 +1,4 @@
-package com.taskagile.config.security;
+package com.taskagile.securiy.oauth;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;

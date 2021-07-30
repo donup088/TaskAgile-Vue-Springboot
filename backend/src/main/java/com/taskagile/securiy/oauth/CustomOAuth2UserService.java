@@ -1,4 +1,4 @@
-package com.taskagile.service.user;
+package com.taskagile.securiy.oauth;
 
 import com.taskagile.domain.user.User;
 import com.taskagile.domain.user.UserRepository;

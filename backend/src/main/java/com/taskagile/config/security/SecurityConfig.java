@@ -1,10 +1,11 @@
 package com.taskagile.config.security;
 
+import com.taskagile.securiy.oauth.CustomOAuth2UserService;
+import com.taskagile.securiy.oauth.OAuth2SuccessHandler;
 import com.taskagile.securiy.token.JwtAuthEntryPoint;
 import com.taskagile.securiy.token.JwtTokenAuthenticationFilter;
 import com.taskagile.securiy.token.TokenProvider;
 import com.taskagile.securiy.userdetails.CustomUserDetailsService;
-import com.taskagile.service.user.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

@@ -1,4 +1,4 @@
-package com.taskagile.config.security;
+package com.taskagile.securiy.oauth;
 
 import com.taskagile.domain.user.RefreshToken;
 import com.taskagile.domain.user.RefreshTokenRepository;
